@@ -1,8 +1,5 @@
-package slbedu.library.services;
+package bar.services;
 
-
-import slbedu.library.dao.UserDAO;
-import slbedu.library.model.User;
 
 import java.net.HttpURLConnection;
 
@@ -14,6 +11,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import bar.dao.UserDAO;
+import bar.model.User;
 
 @Stateless
 @Path("user")

@@ -1,4 +1,4 @@
-package slbedu.library.filters;
+package bar.filters;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import slbedu.library.model.User;
-import slbedu.library.services.UserContext;
+import bar.model.User;
+import bar.services.UserContext;
 
 @WebFilter("/rest/book/borrow")
 public class ProtectedResourcesFilter implements Filter {

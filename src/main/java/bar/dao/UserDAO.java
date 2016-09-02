@@ -1,4 +1,4 @@
-package slbedu.library.dao;
+package bar.dao;
 
 import java.security.MessageDigest;
 
@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import slbedu.library.model.User;
+import bar.model.User;
 
 @Singleton
 public class UserDAO {

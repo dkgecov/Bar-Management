@@ -1,4 +1,4 @@
-package slbedu.library.utils;
+package bar.utils;
 
 import java.util.Date;
 
@@ -7,10 +7,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import slbedu.library.dao.BookDAO;
-import slbedu.library.dao.UserDAO;
-import slbedu.library.model.Book;
-import slbedu.library.model.User;
+import bar.dao.BookDAO;
+import bar.dao.UserDAO;
+import bar.model.Book;
+import bar.model.User;
 
 @Stateless
 public class DatabaseUtils {

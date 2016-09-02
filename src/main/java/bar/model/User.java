@@ -1,4 +1,4 @@
-package slbedu.library.model;
+package bar.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;

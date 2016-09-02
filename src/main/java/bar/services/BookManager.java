@@ -1,12 +1,13 @@
-package slbedu.library.services;
-
-import slbedu.library.dao.BookDAO;
-import slbedu.library.model.Book;
+package bar.services;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+
+import bar.dao.BookDAO;
+import bar.model.Book;
+
 import java.util.Collection;
 
 

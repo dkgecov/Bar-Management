@@ -1,10 +1,10 @@
-package slbedu.library.services;
+package bar.services;
 
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 
-import slbedu.library.model.User;
+import bar.model.User;
 
 @SessionScoped
 public class UserContext implements Serializable {

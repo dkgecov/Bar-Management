@@ -1,4 +1,4 @@
-package slbedu.library.dao;
+package bar.dao;
 
 import java.util.Collection;
 
@@ -8,8 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import slbedu.library.model.Book;
-import slbedu.library.model.User;
+import bar.model.Book;
+import bar.model.User;
 
 @Singleton
 public class BookDAO {

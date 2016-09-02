@@ -1,4 +1,4 @@
-package slbedu.library.rest;
+package bar.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
