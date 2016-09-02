@@ -1,0 +1,24 @@
+
+<Context>
+
+<Resource name="LibraryDS2"
+
+auth="Container"
+
+type="javax.sql.DataSource"
+
+username="root"
+
+password="51303"
+
+driverClassName="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql:/localhost:3306/library"
+
+maxActive="15"
+
+maxIdle="3"
+
+JtaManaged="true"/>
+
+</Context>
