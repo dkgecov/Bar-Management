@@ -15,7 +15,7 @@ import java.io.Serializable;
 @XmlRootElement
 @Table(name = "ITEMS")
 @NamedQueries({
-        @NamedQuery(name = "findByPriceAndName", query = "SELECT b FROM Item b WHERE b.name = :name AND b.price = :price"),
+        @NamedQuery(name = "findByPriceAndName", query = "SELECT b FROM Item b WHERE b.itemName = :name AND b.price = :price"),
         @NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b")})
 public class Item implements Serializable {
 
@@ -28,7 +28,7 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String name;
+    private String itemName;
 
     private String price;
 
@@ -41,7 +41,7 @@ public class Item implements Serializable {
 
     public Item(String name, String price, String type, String description) {
         super();
-        this.name = name;
+        this.itemName = name;
         this.price = price;
         this.type = type;
         this.description = description;
@@ -56,11 +56,11 @@ public class Item implements Serializable {
     }
 
     public String getname() {
-        return name;
+        return itemName;
     }
 
     public void setname(String name) {
-        this.name = name;
+        this.itemName = name;
     }
 
     public String getprice() {
@@ -90,8 +90,8 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
-        if (name != null && !name.trim().isEmpty())
-            result += "name: " + name;
+        if (itemName != null && !itemName.trim().isEmpty())
+            result += "name: " + itemName;
         if (price != null && !price.trim().isEmpty())
             result += ", price: " + price;
         if (type != null && !type.trim().isEmpty())
