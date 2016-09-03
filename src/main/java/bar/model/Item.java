@@ -6,15 +6,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
 @Entity
 @XmlRootElement
+@Table(name = "ITEMS")
 @NamedQueries({
-        @NamedQuery(name = "findByAuthorAndTitle", query = "SELECT b FROM Book b WHERE b.title = :title AND b.author = :author"),
-        @NamedQuery(name = "getAllBooks", query = "SELECT b FROM Book b")})
+        @NamedQuery(name = "findByPriceAndName", query = "SELECT b FROM Item b WHERE b.name = :name AND b.price = :price"),
+        @NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b")})
 public class Item implements Serializable {
 
     private static final long serialVersionUID = -2929008106626811914L;
@@ -28,16 +30,18 @@ public class Item implements Serializable {
     private String price;
 
     private String type;
+    
+    private String description;
 
     public Item() {
     }
 
-    public Item(String title, String author, String isbn, int amount) {
+    public Item(String name, String price, String type, String description) {
         super();
-        this.title = title;
-        this.author = author;
-        this.isbn = isbn;
-        this.amount = amount;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.description = description;
     }
 
     public Long getId() {
@@ -48,48 +52,48 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getname() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setname(String name) {
+        this.name = name;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getprice() {
+        return price;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setprice(String price) {
+        this.price = price;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public String gettype() {
+        return type;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void settype(String type) {
+        this.type = type;
     }
 
-    public int getAmount() {
-        return amount;
+    public String getdescription() {
+        return description;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
-        if (title != null && !title.trim().isEmpty())
-            result += "title: " + title;
-        if (author != null && !author.trim().isEmpty())
-            result += ", author: " + author;
-        if (isbn != null && !isbn.trim().isEmpty())
-            result += ", isbn: " + isbn;
-        result += ", amount: " + amount;
+        if (name != null && !name.trim().isEmpty())
+            result += "name: " + name;
+        if (price != null && !price.trim().isEmpty())
+            result += ", price: " + price;
+        if (type != null && !type.trim().isEmpty())
+            result += ", type: " + type;
+        result += ", description: " + description;
         return result;
     }
 
