@@ -72,4 +72,13 @@ public class UserManager {
 	public void logoutUser() {
 		context.setCurrentUser(null);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
