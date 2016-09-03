@@ -87,6 +87,8 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
+        if (id != null)
+            result += ", id: " + id;
         if (name != null && !name.trim().isEmpty())
             result += "name: " + name;
         if (price != null && !price.trim().isEmpty())
