@@ -1,5 +1,7 @@
 package bar.dao;
 
+import java.util.Collection;
+
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +16,7 @@ public class ItemDAO {
 	  @PersistenceContext
 	    private EntityManager em;
 	
-	public void addBook(Item item)
+	public void addItem(Item item)
 	{
 		em.persist(item);
 		
@@ -35,6 +37,13 @@ public class ItemDAO {
             return null;
         }
     }
+    
+    
+    public Collection<Item> getAllItems() {
+        return em.createNamedQuery("getAllItems", Item.class).getResultList();
+    }
+    
+    
 	
 	
 	
