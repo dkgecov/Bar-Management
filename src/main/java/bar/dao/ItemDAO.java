@@ -14,7 +14,7 @@ public class ItemDAO {
 	  @PersistenceContext
 	    private EntityManager em;
 	
-	public void addBook(Item item)
+	public void addItem(Item item)
 	{
 		em.persist(item);
 		
