@@ -23,6 +23,7 @@ import java.util.List;
 @XmlRootElement
 @Table(name = "ORDERS")
 @NamedQueries({
+    	@NamedQuery(name = "findByStatus", query = "SELECT o FROM Order o WHERE o.status = :status"),
         @NamedQuery(name = "findByStatusAndExecutor", query = "SELECT o FROM Order o WHERE o.executor = :executor AND o.status = :status"),
         })
 		
