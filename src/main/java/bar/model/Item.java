@@ -15,13 +15,10 @@ import java.io.Serializable;
 @XmlRootElement
 @Table(name = "ITEMS")
 @NamedQueries({
-        @NamedQuery(name = "findByPriceAndName", query = "SELECT b FROM Item b WHERE b.name = :name AND b.price = :price"),
-        @NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b")})
+        @NamedQuery(name = "findByPriceAndName", query = "SELECT i FROM Item i WHERE i.name = :name AND i.price = :price"),
+        @NamedQuery(name = "getAllItems", query = "SELECT i FROM Item i")})
 public class Item implements Serializable {
 
-    
-
-    
 	private static final long serialVersionUID = 4654489222889729922L;
 
 	@Id

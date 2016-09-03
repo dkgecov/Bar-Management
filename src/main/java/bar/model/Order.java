@@ -23,8 +23,8 @@ import java.util.List;
 @XmlRootElement
 @Table(name = "ORDERS")
 @NamedQueries({
-        @NamedQuery(name = "findByStatusAndExecutor", query = "SELECT b FROM Order b WHERE b.executor = :executor AND b.status = :status"),
-        @NamedQuery(name = "getAllOrders", query = "SELECT b FROM Order b")})
+        @NamedQuery(name = "findByStatusAndExecutor", query = "SELECT o FROM Order o WHERE o.executor = :executor AND o.status = :status"),
+        @NamedQuery(name = "getAllOrders", query = "SELECT o FROM Order o")})
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 735934458877201921L;
@@ -48,9 +48,8 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(User executor, String status, Date dateOfOrder) {
+    public Order(String status, Date dateOfOrder) {
         super();
-        this.executor = executor;
         this.status = status;
         this.dateOfOrder = dateOfOrder;
     }
