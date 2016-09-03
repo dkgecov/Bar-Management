@@ -19,9 +19,12 @@ import java.io.Serializable;
         @NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b")})
 public class Item implements Serializable {
 
-    private static final long serialVersionUID = -2929008106626811914L;
+    
 
-    @Id
+    
+	private static final long serialVersionUID = 4654489222889729922L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
