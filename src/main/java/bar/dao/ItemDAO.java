@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import bar.model.Item;
-import bar.model.User;
+
 
 @Singleton
 public class ItemDAO {

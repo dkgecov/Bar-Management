@@ -2,6 +2,7 @@ package bar.services;
 
 import java.util.Collection;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import bar.dao.ItemDAO;
 import bar.model.Item;
 import bar.model.User;
 
+@Stateless
 public class ItemManager {
 
 	 @Inject
