@@ -15,13 +15,9 @@ import java.io.Serializable;
 @XmlRootElement
 @Table(name = "ITEMS")
 @NamedQueries({
-<<<<<<< HEAD
-        @NamedQuery(name = "findByPriceAndName", query = "SELECT b FROM Item b WHERE b.itemName = :name AND b.price = :price"),
-        @NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b")})
-=======
-        @NamedQuery(name = "findByPriceAndName", query = "SELECT i FROM Item i WHERE i.name = :name AND i.price = :price"),
+        @NamedQuery(name = "findByPriceAndName", query = "SELECT i FROM Item i WHERE i.itemName = :name AND i.price = :price"),
         @NamedQuery(name = "getAllItems", query = "SELECT i FROM Item i")})
->>>>>>> 26ed818b7a5e9b2fb808db55f82468302a5a42e1
+
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = 4654489222889729922L;
@@ -92,15 +88,12 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         String result = getClass().getSimpleName() + " ";
-<<<<<<< HEAD
         if (itemName != null && !itemName.trim().isEmpty())
             result += "name: " + itemName;
-=======
         if (id != null)
             result += ", id: " + id;
-        if (name != null && !name.trim().isEmpty())
-            result += "name: " + name;
->>>>>>> 26ed818b7a5e9b2fb808db55f82468302a5a42e1
+        if (itemName != null && !itemName.trim().isEmpty())
+            result += "name: " + itemName;
         if (price != null && !price.trim().isEmpty())
             result += ", price: " + price;
         if (type != null && !type.trim().isEmpty())

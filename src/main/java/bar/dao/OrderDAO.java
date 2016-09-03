@@ -1,10 +1,13 @@
 package bar.dao;
 
+import java.util.Collection;
+
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import bar.model.Order;
+import bar.model.User;
 
 @Singleton
 public class OrderDAO {
@@ -16,7 +19,11 @@ public class OrderDAO {
 		em.persist(order);
 	}
 	
-	public Collection<Order> getAllOrders() {
-		return em.createNamedQuery("getAllOrders", Order.class)
+	public Collection<Order> getCurrentOrders(User user) {
+		
+	}
+	
+	public Collection<Order> getAllWaitingOrders() {
+		return em.createNamedQuery("findByStatusAndExecutor", Order.class).getResultList();
 	}
 }

@@ -24,7 +24,8 @@ import java.util.List;
 @Table(name = "ORDERS")
 @NamedQueries({
         @NamedQuery(name = "findByStatusAndExecutor", query = "SELECT o FROM Order o WHERE o.executor = :executor AND o.status = :status"),
-        @NamedQuery(name = "getAllOrders", query = "SELECT o FROM Order o")})
+        })
+		
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 735934458877201921L;

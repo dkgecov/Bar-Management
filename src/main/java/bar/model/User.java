@@ -31,7 +31,7 @@ public class User implements Serializable {
     private Date dateOfBirth;
 
     @OneToMany
-    private Set<Item> currentItems = new HashSet<>();
+    private Set<Order> currentOrders = new HashSet<>();
 
     public User() {
     }
@@ -95,12 +95,12 @@ public class User implements Serializable {
         return result;
     }
 
-    public Set<Item> getCurrentItems() {
-        return this.currentItems;
+    public Set<Order> getCurrentOrders() {
+        return this.currentOrders;
     }
 
-    public void setCurrentItems(final Set<Item> currentItems) {
-        this.currentItems = currentItems;
+    public void setCurrentItems(final Set<Order> currentOrders) {
+        this.currentOrders = currentOrders;
     }
 
     @Override
