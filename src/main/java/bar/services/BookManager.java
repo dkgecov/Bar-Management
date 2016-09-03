@@ -6,7 +6,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 import bar.dao.BookDAO;
-import bar.model.Book;
+import bar.model.Item;
 
 import java.util.Collection;
 
@@ -23,21 +23,21 @@ public class BookManager {
 
     @GET
     @Produces("application/json")
-    public Collection<Book> getAllBooks() {
+    public Collection<Item> getAllBooks() {
         return bookDAO.getAllBooks();
     }
 
     @GET
     @Path("{bookId}")
     @Produces("application/json")
-    public Book getBook(@PathParam("bookId") String bookId) {
+    public Item getBook(@PathParam("bookId") String bookId) {
         return bookDAO.findById(Long.parseLong(bookId));
     }
 
     @PUT
     @Path("/borrow")
     public Response borrowBook(@QueryParam("bookId") String bookId) {
-        Book bookToBorrow = bookDAO.findById(Long.parseLong(bookId));
+        Item bookToBorrow = bookDAO.findById(Long.parseLong(bookId));
         if (bookToBorrow != null) {
             bookDAO.borrowBook(bookToBorrow, userContext.getCurrentUser());
         }

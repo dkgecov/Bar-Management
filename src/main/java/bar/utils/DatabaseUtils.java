@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import bar.dao.BookDAO;
 import bar.dao.UserDAO;
-import bar.model.Book;
+import bar.model.Item;
 import bar.model.User;
 
 @Stateless
@@ -23,10 +23,10 @@ public class DatabaseUtils {
             new User("Third User", "98411TA", "third.user@somemail.com",
                     new Date())};
 
-    private static Book[] BOOKS = {
-            new Book("The Old Man and the Sea", "Ernest Hemingway",
+    private static Item[] BOOKS = {
+            new Item("The Old Man and the Sea", "Ernest Hemingway",
                     "978-3-16-148410-0", 5),
-            new Book("Tom Sawyer", "Mark Twain", "978-4-16-241512-0", 0)};
+            new Item("Tom Sawyer", "Mark Twain", "978-4-16-241512-0", 0)};
 
     @PersistenceContext
     private EntityManager em;
@@ -55,7 +55,7 @@ public class DatabaseUtils {
     }
 
     private void addTestBooks() {
-        for (Book book : BOOKS) {
+        for (Item book : BOOKS) {
             bookDAO.addBook(book);
         }
     }

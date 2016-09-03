@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "findByAuthorAndTitle", query = "SELECT b FROM Book b WHERE b.title = :title AND b.author = :author"),
         @NamedQuery(name = "getAllBooks", query = "SELECT b FROM Book b")})
-public class Book implements Serializable {
+public class Item implements Serializable {
 
     private static final long serialVersionUID = -2929008106626811914L;
 
@@ -23,18 +23,16 @@ public class Book implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title;
+    private String name;
 
-    private String author;
+    private String price;
 
-    private String isbn;
+    private String type;
 
-    private int amount;
-
-    public Book() {
+    public Item() {
     }
 
-    public Book(String title, String author, String isbn, int amount) {
+    public Item(String title, String author, String isbn, int amount) {
         super();
         this.title = title;
         this.author = author;
@@ -100,10 +98,10 @@ public class Book implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Book)) {
+        if (!(obj instanceof Item)) {
             return false;
         }
-        Book other = (Book) obj;
+        Item other = (Item) obj;
         if (id != null) {
             if (!id.equals(other.id)) {
                 return false;
