@@ -53,35 +53,35 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public String getname() {
+    public String getName() {
         return itemName;
     }
 
-    public void setname(String name) {
+    public void setName(String name) {
         this.itemName = name;
     }
 
-    public String getprice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setprice(String price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public String gettype() {
+    public String getType() {
         return type;
     }
 
-    public void settype(String type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public String getdescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setdescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
