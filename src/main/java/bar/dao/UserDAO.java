@@ -35,6 +35,13 @@ public class UserDAO {
         return queryUser(query);
     }
 
+    public boolean emailExists(String email) {
+        String txtQuery = "SELECT u FROM User u WHERE u.email = :email";
+        TypedQuery<User> query = em.createQuery(txtQuery, User.class);
+        query.setParameter("email", email);
+        return queryUser(query) != null;
+    }
+    
     private User queryUser(TypedQuery<User> query) {
         try {
             return query.getSingleResult();
