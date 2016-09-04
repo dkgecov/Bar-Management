@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,27 +42,38 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfOrder;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateOfOrder;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfAcceptance;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateOfAcceptance;
 
 	@ManyToMany
 	private List<Item> itemsInOrder = new ArrayList<>();
 
 	private float totalPrice;
+	
 
+
+	private int acceptanceDay;
+	
+	private int acceptanceWeek;
+	
+	private int acceptanceMonth;
+	
+	
 	public Order() {
 	}
 
-	public Order(Status status, Date dateOfOrder) {
+	public Order(Status status, Calendar dateOfOrder) {
 		super();
 		this.status = status;
 		this.dateOfOrder = dateOfOrder;
 		this.totalPrice = 0.0f;
+		
 	}
 
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -86,22 +98,68 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 
-	public Date getDateOfOrder() {
+	
+//
+	public Calendar getDateOfOrder() {
 		return dateOfOrder;
 	}
 
-	public void setDateOfOrder(Date dateOfOrder) {
+	public void setDateOfOrder(Calendar dateOfOrder) {
 		this.dateOfOrder = dateOfOrder;
 	}
-
-	public Date getDateOfAcceptance() {
+//
+	
+	
+//
+	public Calendar getDateOfAcceptance() {
 		return dateOfAcceptance;
 	}
 
-	public void setDateOfAcceptance(Date dateOfAcceptance) {
+	public void setDateOfAcceptance(Calendar dateOfAcceptance) {
 		this.dateOfAcceptance = dateOfAcceptance;
 	}
+//
+	
+	
+	public void setAcceptanceDay(){
+		
+		this.acceptanceDay=dateOfAcceptance.get(Calendar.DAY_OF_WEEK);		
+	}
+	
+	public void setAcceptanceWeek(){
+		
+		this.acceptanceWeek=dateOfAcceptance.get(Calendar.WEEK_OF_YEAR);
+	}
+	
+	public void setAcceptanceMonth(){
+		
+		this.acceptanceMonth=dateOfAcceptance.get(Calendar.MONTH);
+	}
+	
 
+	public int getAcceptanceDay() {
+		return acceptanceDay;
+	}
+
+	public int getAcceptanceWeek() {
+		return acceptanceWeek;
+	}
+
+	public int getAcceptanceMonth() {
+		return acceptanceMonth;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public double getTotalPrice() {
 		return totalPrice;
 	}
