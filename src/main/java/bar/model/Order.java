@@ -22,12 +22,10 @@ import java.util.List;
 @Entity
 @XmlRootElement
 @Table(name = "ORDERS")
-@NamedQueries({ 
-	@NamedQuery(name = "findById", query = "SELECT o FROM Order o WHERE o.status = :status"),
-	@NamedQuery(name = "findByStatus", query = "SELECT o FROM Order o WHERE o.status = :status"),
-	@NamedQuery(name = "getAcceptedAndOverdue", query = "SELECT o FROM Order o WHERE o.executor = :executor AND (o.status = :status1 OR o.status = :status2)"),
-	@NamedQuery(name = "setOrderAsOverdue", query = "SELECT o FROM Order o WHERE o.executor = :executor AND (o.status = :status1 OR o.status = :status2)"),
-	})
+@NamedQueries({ @NamedQuery(name = "findById", query = "SELECT o FROM Order o WHERE o.status = :status"),
+		@NamedQuery(name = "findByStatus", query = "SELECT o FROM Order o WHERE o.status = :status"),
+		@NamedQuery(name = "getAcceptedAndOverdue", query = "SELECT o FROM Order o WHERE o.executor = :executor AND (o.status = :status1 OR o.status = :status2)"),
+		@NamedQuery(name = "setOrderAsOverdue", query = "SELECT o FROM Order o WHERE o.executor = :executor AND (o.status = :status1 OR o.status = :status2)"), })
 
 public class Order implements Serializable {
 
@@ -50,7 +48,9 @@ public class Order implements Serializable {
 	private Date dateOfAcceptance;
 
 	@ManyToMany
-	private List<Item> ItemsInOrder = new ArrayList<>();
+	private List<Item> itemsInOrder = new ArrayList<>();
+
+	private float totalPrice;
 
 	public Order() {
 	}
@@ -59,6 +59,7 @@ public class Order implements Serializable {
 		super();
 		this.status = status;
 		this.dateOfOrder = dateOfOrder;
+		this.totalPrice = 0.0f;
 	}
 
 	public Long getId() {
@@ -101,9 +102,26 @@ public class Order implements Serializable {
 		this.dateOfAcceptance = dateOfAcceptance;
 	}
 
+	public double getTotalPrice() {
+		return totalPrice;
+	}
+
+	private void setTotalPrice(float totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public void calculateTotalPrice() {
+		float sumPrice = 0.0f;
+		for (Item item : itemsInOrder) {
+			sumPrice += Float.parseFloat(item.getPrice());
+		}
+		setTotalPrice(sumPrice);
+	}
+
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
+
 		if (id != null)
 			result += ", id: " + id;
 		if (executor != null)
@@ -112,6 +130,14 @@ public class Order implements Serializable {
 			result += ", status: " + status;
 		if (dateOfOrder != null)
 			result += ", dateOfOrder: " + dateOfOrder.toString();
+		if (itemsInOrder != null && !itemsInOrder.isEmpty()) {
+			result += "\nordered items:\n";
+			for (Item item : itemsInOrder) {
+				result += " " + item.getName() + ": " + item.getPrice() + "\n";
+			}
+			calculateTotalPrice();
+			result += "Total price: " + getTotalPrice() + "\n";
+		}
 		return result;
 	}
 
