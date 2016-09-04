@@ -7,45 +7,36 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import bar.dao.ItemDAO;
 import bar.model.Item;
 import bar.model.User;
 
 @Stateless
+@Path("item")
 public class ItemManager {
 
-	 @Inject
-	    private ItemDAO itemDAO;
-	
-	
-	
-	 @POST
-	    @Consumes(MediaType.APPLICATION_JSON)
-	    public void addNewItem(Item newItem) {
-	        itemDAO.addItem(newItem);
-	        
-	    }
-	 
-	 
-	 @GET
-	    @Produces("application/json")
-	    public Collection<Item> getAllItems() {
-	        return itemDAO.getAllItems();
-	    }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	
-	
+	private static final Response RESPONSE_OK = Response.ok().build();
+
+	@Inject
+	private ItemDAO itemDAO;
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addNewItem(Item newItem) {
+		itemDAO.addItem(newItem);
+		return RESPONSE_OK;
+	}
+
+	@Path("/items")
+	@GET
+	@Produces("application/json")
+	public Collection<Item> getAllItems() {
+		return itemDAO.getAllItems();
+	}
+
 }

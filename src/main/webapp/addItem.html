@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add Item</title>
+<link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="styles/bar.css" />
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+	function addItem() {
+		var formUrl = $("#item_adding_form").attr("action");
+		var itemName = $("#itemName")[0].value;
+		var price = $("#price")[0].value;
+		var type = $("#type")[0].value;
+		var description = $("#description")[0].value;
+
+		var data = {
+			item : {
+				itemName : itemName,
+				price : price,
+				type : type,
+				description : description
+			}
+		}
+
+		$.ajax({
+			url : 'rest/item',
+			type : "POST",
+			contentType : "application/json;charset=UTF-8",
+			data : JSON.stringify(data)
+		}).success(function(data) {
+			$("#item_adding_form").attr("action", "index.html");
+			$("#item_adding_form").submit();
+			alert("success");
+		}).fail(function(data) {
+			$("#item_adding_form").attr("action", "addItem.html");
+			alert("failed");
+		});
+	}
+</script>
+</head>
+<body>
+
+	<h1 align="center">
+		<b>ITEM ADDING FORM</b>
+	</h1>
+
+	<form id="item_adding_form" role="form" method="post">
+		<div class="form-group">
+			<label for="itemName">Item name:</label> <input type="text"
+				class="form-control" name="itemName" id="itemName" value="">
+		</div>
+		<div class="form-group">
+			<label for="price">Price:</label> <input type="text"
+				class="form-control" name="price" id="price" value="">
+		</div>
+
+		<div class="form-group">
+			<label for="type">Type:</label> <input type="text"
+				class="form-control" name="type" id="type" value="">
+		</div>
+
+		<div class="form-group">
+			<label for="description">Description:</label> <input type="text"
+				class="form-control" name="description" id="description" value="">
+		</div>
+
+
+
+		<button type="reset" class="btn btn-default" id="reset_add_item">Reset</button>
+		<button type="button" onclick="addItem()" class="btn btn-default">Submit</button>
+	</form>
+</body>
+</html>
