@@ -27,7 +27,7 @@ public class ProfitDAO {
 		int month=now.get(Calendar.MONTH);//January-0
 		
 
-		Query q = em.createQuery ("SELECT SUM(o.totalPrice) FROM Order o WHERE o.getDay=:day AND o.getWeek=:week AND o.getMonth=:month ");
+		Query q = em.createQuery ("SELECT SUM(o.totalPrice) FROM Order o WHERE o.getAcceptanceDay=:day AND o.getWeek=:week AND o.getMonth=:month ");
         
 		try {
             return  (float) q.getSingleResult();
