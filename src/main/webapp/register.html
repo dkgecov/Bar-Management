@@ -12,27 +12,32 @@
 		var username = $("#userName")[0].value;
 		var password = $("#pwd")[0].value;
 		var email = $("#email")[0].value;
+		var role = $("#role").val();
 
 		if (username == "") {
 			alert("Please fill username");
 			return;
 		}
-
+		
 		if (!isPasswordValid(password)) {
 			return;
 		}
 
 		if (!isValidEmailAddress(email)) {
-			alert("Please fill correct email syntax");
+			alert("Please fill correct email syntax!");
 			return;
 		}
 
+		if(role == "undefined"){
+			alert("Please choose a role!");
+			return;
+		}
 		var data = {
 			user : {
 				userName : username,
 				password : password,
-				email : email
-
+				email : email,
+				role : role
 			}
 		}
 
@@ -43,16 +48,20 @@
 			data : JSON.stringify(data),
 			statusCode : {
 				409 : function() {
-					alert("Email already in use");
+					alert("Email already in use!");
+					$("#reset_register").trigger("click");
+				},
+				400 : function() {
+					alert("Username already in use!");
 					$("#reset_register").trigger("click");
 				}
+			
 			}
 		}).success(function(data) {
 			$("#register_form").attr("action", "index.html");
 			$("#register_form").submit();
 		}).fail(function(data) {
 			$("#register_form").attr("action", "register.html");
-
 		});
 	}
 
@@ -104,7 +113,15 @@
 				class="form-control" name="email" id="email" value="">
 		</div>
 
-
+		<div class="form-group">
+			<label for="role">Role:</label> <select class="form-control"
+				name="role" id="role">
+				<option value="undefined">Select Role</option>
+				<option value="Waiter">Waiter</option>
+				<option value="Barman">Barman</option>
+				<option value="Manager">Manager</option>
+			</select>
+		</div>
 
 		<button type="reset" class="btn btn-default" id="reset_register">Reset</button>
 		<button type="button" onclick="register()" class="btn btn-default">Submit</button>

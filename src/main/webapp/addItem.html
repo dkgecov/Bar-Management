@@ -14,12 +14,11 @@
 		var type = $("#type")[0].value;
 		var description = $("#description")[0].value;
 
-		if(itemName == "" || price == "" || type == "" || description == ""){
+		if (itemName == "" || price == "" || type == "" || description == "") {
 			alert("Please fill every section!");
 			return;
 		}
-		
-		
+
 		var data = {
 			item : {
 				itemName : itemName,
@@ -33,27 +32,31 @@
 			url : 'rest/item',
 			type : "POST",
 			contentType : "application/json;charset=UTF-8",
-			data : JSON.stringify(data)
+			data : JSON.stringify(data),
+			statusCode : {
+				401 : function() {
+					alert("You are not AUTHORIZED to make such request!");
+					window.location.href = "/401";
+				}
+			}
 		}).success(function(data) {
 			$("#item_adding_form").attr("action", "addItem.html");
 			$("#item_adding_form").submit();
 			alert("success");
 		}).fail(function(data) {
 			$("#item_adding_form").attr("action", "addItem.html");
-			alert("failed");
 		});
 	}
-	
+
 	function logout() {
-    	$.ajax({
-            url: 'rest/user/logout',
-            type: "GET",
-            dataType: "text"
-        }).always(function(data){
-        	window.location.replace("login.html");
-        });
-    }
-	
+		$.ajax({
+			url : 'rest/user/logout',
+			type : "GET",
+			dataType : "text"
+		}).always(function(data) {
+			window.location.replace("login.html");
+		});
+	}
 </script>
 </head>
 <body>
@@ -83,14 +86,14 @@
 		</div>
 
 		<div class="login_register">
-			<a href="index.html" class="login_form"> Main </a>
-       		<a href="register.html" class="register_form"> Register </a>
+			<a href="index.html" class="login_form"> Main </a> <a
+				href="register.html" class="register_form"> Register </a>
 		</div>
 
 		<div class="logout">
 			<a onclick="logout()"> Logout </a>
 		</div>
-		
+
 		<button type="reset" class="btn btn-default" id="reset_add_item">Reset</button>
 		<button type="button" onclick="addItem()" class="btn btn-default">Submit</button>
 	</form>

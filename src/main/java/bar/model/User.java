@@ -13,118 +13,132 @@ import java.util.Set;
 @Table(name = "USERS")
 public class User implements Serializable {
 
-    
-
 	private static final long serialVersionUID = 723805481381084856L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-    private String userName;
+	@Column
+	private String userName;
 
-    private String password;
+	@Column
+	private String password;
 
-    private String email;
+	@Column
+	private String email;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateOfBirth;
+	@Column
+	private String role;
 
-    @OneToMany
-    private Set<Order> currentOrders = new HashSet<>();
+	@Temporal(TemporalType.DATE)
+	private Date dateOfBirth;
 
-    public User() {
-    }
+	@OneToMany
+	private Set<Order> currentOrders = new HashSet<>();
 
-    public User(String userName, String password, String email, Date dateOfBirth) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.dateOfBirth = dateOfBirth;
-    }
+	public User() {
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public User(String userName, String password, String email, Date dateOfBirth) {
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-    @Override
-    public String toString() {
-        String result = getClass().getSimpleName() + " ";
-        if (userName != null && !userName.trim().isEmpty())
-            result += "userName: " + userName;
-        if (password != null && !password.trim().isEmpty())
-            result += ", password: " + password;
-        if (email != null && !email.trim().isEmpty())
-            result += ", email: " + email;
-        return result;
-    }
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
 
-    public Set<Order> getCurrentOrders() {
-        return this.currentOrders;
-    }
+	public Set<Order> getCurrentOrders() {
+		return this.currentOrders;
+	}
 
-    public void setCurrentItems(final Set<Order> currentOrders) {
-        this.currentOrders = currentOrders;
-    }
+	public void setCurrentItems(final Set<Order> currentOrders) {
+		this.currentOrders = currentOrders;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof User)) {
-            return false;
-        }
-        User other = (User) obj;
-        if (id != null) {
-            if (!id.equals(other.id)) {
-                return false;
-            }
-        }
-        return true;
-    }
+	public String getRole() {
+		return role;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		String result = getClass().getSimpleName() + " ";
+		if (userName != null && !userName.trim().isEmpty())
+			result += "userName: " + userName;
+		if (password != null && !password.trim().isEmpty())
+			result += ", password: " + password;
+		if (email != null && !email.trim().isEmpty())
+			result += ", email: " + email;
+		if (role != null && !role.trim().isEmpty())
+			result += ", role: " + role;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (id != null) {
+			if (!id.equals(other.id)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 }

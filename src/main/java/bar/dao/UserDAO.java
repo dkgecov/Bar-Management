@@ -28,11 +28,11 @@ public class UserDAO {
         return queryUser(query) != null;
     }
 
-    public User findUserByName(String userName) {
+    public Boolean userNameExists(String userName) {
         String txtQuery = "SELECT u FROM User u WHERE u.userName = :userName";
         TypedQuery<User> query = em.createQuery(txtQuery, User.class);
         query.setParameter("userName", userName);
-        return queryUser(query);
+        return queryUser(query) != null;
     }
 
     public boolean emailExists(String email) {
