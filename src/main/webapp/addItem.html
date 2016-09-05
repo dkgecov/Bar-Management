@@ -14,6 +14,12 @@
 		var type = $("#type")[0].value;
 		var description = $("#description")[0].value;
 
+		if(itemName == "" || price == "" || type == "" || description == ""){
+			alert("Please fill every section!");
+			return;
+		}
+		
+		
 		var data = {
 			item : {
 				itemName : itemName,
@@ -29,7 +35,7 @@
 			contentType : "application/json;charset=UTF-8",
 			data : JSON.stringify(data)
 		}).success(function(data) {
-			$("#item_adding_form").attr("action", "index.html");
+			$("#item_adding_form").attr("action", "addItem.html");
 			$("#item_adding_form").submit();
 			alert("success");
 		}).fail(function(data) {
@@ -37,6 +43,17 @@
 			alert("failed");
 		});
 	}
+	
+	function logout() {
+    	$.ajax({
+            url: 'rest/user/logout',
+            type: "GET",
+            dataType: "text"
+        }).always(function(data){
+        	window.location.replace("login.html");
+        });
+    }
+	
 </script>
 </head>
 <body>
@@ -65,8 +82,15 @@
 				class="form-control" name="description" id="description" value="">
 		</div>
 
+		<div class="login_register">
+			<a href="index.html" class="login_form"> Main </a>
+       		<a href="register.html" class="register_form"> Register </a>
+		</div>
 
-
+		<div class="logout">
+			<a onclick="logout()"> Logout </a>
+		</div>
+		
 		<button type="reset" class="btn btn-default" id="reset_add_item">Reset</button>
 		<button type="button" onclick="addItem()" class="btn btn-default">Submit</button>
 	</form>

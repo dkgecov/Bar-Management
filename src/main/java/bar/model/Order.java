@@ -191,7 +191,7 @@ public class Order implements Serializable {
 		if (itemsInOrder != null && !itemsInOrder.isEmpty()) {
 			result += "\nordered items:\n";
 			for (Item item : itemsInOrder) {
-				result += " " + item.getName() + ": " + item.getPrice() + "\n";
+				result += " " + item.getItemName() + ": " + item.getPrice() + "\n";
 			}
 			if(getTotalPrice() != 0.0f)
 				calculateTotalPrice();

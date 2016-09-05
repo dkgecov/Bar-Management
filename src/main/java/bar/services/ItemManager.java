@@ -2,6 +2,8 @@ package bar.services;
 
 import java.util.Collection;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,6 +20,7 @@ import bar.model.User;
 
 @Stateless
 @Path("item")
+@DeclareRoles({"Manager", "Waiter", "Barman"})
 public class ItemManager {
 
 	private static final Response RESPONSE_OK = Response.ok().build();
@@ -27,7 +30,9 @@ public class ItemManager {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed("Manager")
 	public Response addNewItem(Item newItem) {
+		
 		itemDAO.addItem(newItem);
 		return RESPONSE_OK;
 	}
@@ -35,6 +40,7 @@ public class ItemManager {
 	@Path("/items")
 	@GET
 	@Produces("application/json")
+	@RolesAllowed({"Manager", "Waiter"})
 	public Collection<Item> getAllItems() {
 		return itemDAO.getAllItems();
 	}
