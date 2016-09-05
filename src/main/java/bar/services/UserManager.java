@@ -76,7 +76,8 @@ public class UserManager {
 		}
 		return RESPONSE_OK;
 	}
-//Ползва ли се във jquery?
+
+	// Ползва ли се във jquery?
 	@Path("current")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -93,6 +94,7 @@ public class UserManager {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@PermitAll
 	public void logoutUser() {
+		System.out.println("user logging out");
 		context.setCurrentUser(null);
 	}
 

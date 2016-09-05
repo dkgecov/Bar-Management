@@ -34,6 +34,18 @@ public class OrderManager {
 	@Inject
 	private UserContext context;
 
+	@Path("order")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({ "Manager", "Waiter" })
+	public Response order(Order newOrder) {
+		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Waiter"))) {
+			return null;
+		}
+		orderDAO.addOrder(newOrder);
+		return RESPONSE_OK;
+	}
+
 	@GET
 	@Produces("application/json")
 	@RolesAllowed({ "Manager", "Barman" })
@@ -55,15 +67,15 @@ public class OrderManager {
 		return orderDAO.getCurrentUserOrders(context.getCurrentUser());
 	}
 
-	@Path("/order")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({ "Manager", "Waiter" })
-
-	public Response order(Order newOrder) {
-		orderDAO.addOrder(newOrder);
-		return Response.noContent().build();
-	}
+	// @Path("/order")
+	// @POST
+	// @Consumes(MediaType.APPLICATION_JSON)
+	// @RolesAllowed({ "Manager", "Waiter" })
+	//
+	// public Response order(Order newOrder) {
+	// orderDAO.addOrder(newOrder);
+	// return Response.noContent().build();
+	// }
 
 	// @Path("/accept")
 	// @PUT
@@ -98,7 +110,7 @@ public class OrderManager {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
 		orderDAO.setOrderAsOverdue(Long.parseLong(orderId));
+
 		return RESPONSE_OK;
 	}
-
 }

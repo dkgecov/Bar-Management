@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 
 import bar.dao.ItemDAO;
 import bar.model.Item;
-import bar.model.User;
 
 @Stateless
 @Path("item")
@@ -36,10 +35,12 @@ public class ItemManager {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed("Manager")
 	public Response addNewItem(Item newItem) {
-		if (!context.isCallerInRole("Manager")){
+
+		if (!context.isCallerInRole("Manager")) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-			itemDAO.addItem(newItem);
+
+		itemDAO.addItem(newItem);
 		return RESPONSE_OK;
 	}
 
