@@ -36,7 +36,7 @@ public class OrderManager {
 
 	@GET
 	@Produces("application/json")
-	@RolesAllowed({"Manager", "Barman"})
+	@RolesAllowed({ "Manager", "Barman" })
 	public Collection<Order> getAllWaitingOrders() {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return null;
@@ -47,66 +47,58 @@ public class OrderManager {
 	@Path("/orders")
 	@GET
 	@Produces("application/json")
-	@RolesAllowed({"Manager", "Barman"})
+	@RolesAllowed({ "Manager", "Barman" })
 	public Collection<Order> getCurrentUserOrders() {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return null;
 		}
 		return orderDAO.getCurrentUserOrders(context.getCurrentUser());
 	}
-	
+
 	@Path("/order")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed({"Manager", "Waiter"})
-	
+	@RolesAllowed({ "Manager", "Waiter" })
+
 	public Response order(Order newOrder) {
 		orderDAO.addOrder(newOrder);
 		return Response.noContent().build();
 	}
-	
-<<<<<<< HEAD
+
+	// @Path("/accept")
+	// @PUT
+	// @RolesAllowed({"Manager", "Barman"})
+	// public Response accept() {
+	// if (!(context.isCallerInRole("Manager") |
+	// context.isCallerInRole("Barman"))) {
+	// return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+	// }
+	// orderDAO.setOrderAsAccepted(order, user);
+	//
+	// }
+
 	@Path("/accept")
-	@PUT
-	@RolesAllowed({"Manager", "Barman"})
-	public Response accept() {
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed({ "Manager", "Barman" })
+	public Response setOrderAsAccepted(@QueryParam("orderId") String orderId) {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-		orderDAO.setOrderAsAccepted(order, user);
-
-	}
-=======
-	
-	@Path("/acceptOrder")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	  public void setOrderAsAccepted(@QueryParam("orderId") String orderId) {
-       
 		orderDAO.setOrderAsAccepted(Long.parseLong(orderId));
-		
-    }
-	
-	
-	@Path("/overdueOrder")
+		return RESPONSE_OK;
+	}
+
+	@Path("/overdue")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	  public void setOrderAsOverdue(@QueryParam("orderId") String orderId) {
-       
+	@RolesAllowed({ "Manager", "Barman" })
+	public Response setOrderAsOverdue(@QueryParam("orderId") String orderId) {
+		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		}
 		orderDAO.setOrderAsOverdue(Long.parseLong(orderId));
-		
-    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
->>>>>>> c3d7e70164cbcd9269b97bceb11005ffb185c4fa
+		return RESPONSE_OK;
+	}
+
 }

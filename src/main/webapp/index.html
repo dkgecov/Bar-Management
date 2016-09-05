@@ -77,7 +77,7 @@
 			row.append(acceptTd);
 			link.click(function() {
 				$.ajax({
-					url : 'rest/book/borrow?bookId=' + rowData.id,
+					url : 'rest/order/accept?id=' + rowData.id,
 					type : "PUT",
 					dataType : "json",
 					success : drawTableWithBooks
