@@ -42,11 +42,20 @@
 </script>
 </head>
 <body>
-
+	<div align="left">
+		<h2><a href="index.html">Simple Bar Management</a></h2>	
+	</div>
+	<hr>
 	<h1 align="center">
 		<b>Log in</b>
 	</h1>
-
+	
+	<div class="login_register">
+		<a href="addingOrder.html" class="add_order_form">Add Order</a>
+		<a href="addItem.html" class="add_item_form">Add Items</a>
+        <a href="register.html" class="register_form"> Register </a>
+	</div>
+	
 	<form id="login_form" role="form" method="post">
 		<div class="form-group">
 			<label for="userName">Username:</label> <input type="text"
@@ -58,8 +67,7 @@
 		</div>
 
 		<button type="reset" class="btn btn-default" id="reset_login">Reset</button>
-		<button type="button" onclick="login()" class="btn btn-default">Log
-			in</button>
+		<button type="button" onclick="login()" class="btn btn-default">Log in</button>
 	</form>
 
 </body>

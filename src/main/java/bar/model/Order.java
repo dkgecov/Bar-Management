@@ -1,5 +1,6 @@
 package bar.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +18,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -52,27 +52,66 @@ public class Order implements Serializable {
 	private List<Item> itemsInOrder = new ArrayList<>();
 
 	private float totalPrice;
-	
-
 
 	private int acceptanceDay;
 	
 	private int acceptanceWeek;
 	
 	private int acceptanceMonth;
+
+
+	private int tableNumber;
+
+	private String itemName;
+
+	private int count;
 	
+	public Order(int tableNumber, String itemName, int count) {
+		this.tableNumber = tableNumber;
+		this.itemName = (itemName);
+		this.count = count;
+		this.status = Status.WAITING;
+		this.dateOfAcceptance = Calendar.getInstance();
+		this.acceptanceDay = 0;
+		this.acceptanceWeek = 0;
+		this.acceptanceMonth = 0;
+		this.totalPrice = 0.0f;
+		this.status = Status.WAITING;
+	}
 	
 	public Order() {
+		this.status = Status.WAITING;
+		this.dateOfAcceptance = Calendar.getInstance();
+		this.acceptanceDay = 0;
+		this.acceptanceWeek = 0;
+		this.acceptanceMonth = 0;
+		this.totalPrice = 0.0f;
+		this.status = Status.WAITING;
+		this.tableNumber = -1;
+		this.itemName = "";
+		this.count = 0;
 	}
 
 	public Order( List<Item> itemsInOrder) {
 		super();
+<<<<<<< Updated upstream
 		this.status = Status.WAITING;
 		this.dateOfOrder=Calendar.getInstance();
 		this.totalPrice = 0.0f;
 		this.itemsInOrder=itemsInOrder;
+=======
+		this.status = status;
+		this.dateOfOrder = dateOfOrder;
+		this.acceptanceDay = 0;
+		this.acceptanceWeek = 0;
+		this.acceptanceMonth = 0;
+		this.totalPrice = 0.0f;
+		this.status = Status.WAITING;
+		this.tableNumber = -1;
+		this.itemName = "";
+		this.count = 0;
+>>>>>>> Stashed changes
 	}
-
 	
 	public Long getId() {
 		return this.id;
@@ -98,19 +137,16 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 
-	
 //
-	public Calendar getDateOfOrder() {
-		return dateOfOrder;
+    public Calendar getDateOfOrder() {
+	 	return dateOfOrder;
 	}
 
 	public void setDateOfOrder(Calendar dateOfOrder) {
 		this.dateOfOrder = dateOfOrder;
 	}
 //
-	
-	
-//
+
 	public Calendar getDateOfAcceptance() {
 		return dateOfAcceptance;
 	}
@@ -119,7 +155,6 @@ public class Order implements Serializable {
 		this.dateOfAcceptance = dateOfAcceptance;
 	}
 //
-	
 	
 	public void setAcceptanceDay(){
 		
@@ -136,7 +171,6 @@ public class Order implements Serializable {
 		this.acceptanceMonth=dateOfAcceptance.get(Calendar.MONTH);
 	}
 	
-
 	public int getAcceptanceDay() {
 		return acceptanceDay;
 	}
@@ -148,18 +182,7 @@ public class Order implements Serializable {
 	public int getAcceptanceMonth() {
 		return acceptanceMonth;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -176,6 +199,34 @@ public class Order implements Serializable {
 		setTotalPrice(sumPrice);
 	}
 
+	public String getItemName() {
+		return itemName;
+	}
+	
+	public int getTableNumber() {
+		return tableNumber;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public void setItemName(String itemName) {
+		if (itemName == null) {
+			this.itemName = itemName;
+		} else {
+			this.itemName = "";
+		}
+	}
+	
+	void setTableNumber(int tableNumber) {
+		this.tableNumber = tableNumber;
+	}
+	
+	void setCount(int count) {
+		this.count = count;
+	}
+	
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
@@ -197,6 +248,9 @@ public class Order implements Serializable {
 				calculateTotalPrice();
 			result += "Total price: " + getTotalPrice() + "\n";
 		}
+		result += String.format("tableNumber=%d, itemName=%s count=%d",
+								this.tableNumber, this.itemName, this.count);
+											
 		return result;
 	}
 

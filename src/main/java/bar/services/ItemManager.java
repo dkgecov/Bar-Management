@@ -17,7 +17,6 @@ import javax.ws.rs.core.Response;
 
 import bar.dao.ItemDAO;
 import bar.model.Item;
-import bar.model.User;
 
 @Stateless
 @Path("item")
@@ -28,18 +27,26 @@ public class ItemManager {
 
 	@Inject
 	private ItemDAO itemDAO;
+<<<<<<< Updated upstream
 
 	@Inject
 	private UserContext context;
 
+=======
+
+>>>>>>> Stashed changes
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed("Manager")
 	public Response addNewItem(Item newItem) {
+<<<<<<< Updated upstream
 		if (!context.isCallerInRole("Manager")){
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
 			itemDAO.addItem(newItem);
+=======
+		itemDAO.addItem(newItem);
+>>>>>>> Stashed changes
 		return RESPONSE_OK;
 	}
 

@@ -55,6 +55,7 @@ public class UserManager {
 		return RESPONSE_OK;
 	}
 
+<<<<<<< Updated upstream
 	@Path("authenticated")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -64,6 +65,41 @@ public class UserManager {
 		}
 		return RESPONSE_OK;
 	}
+=======
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response registerUser(User newUser) {
+    	boolean emailExists = userDAO.emailExists(newUser.getEmail());
+    	if (emailExists) {
+    		return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
+    	}
+        userDAO.addUser(newUser);
+        context.setCurrentUser(newUser);
+        return RESPONSE_OK;
+    }
+    
+    @Path("login")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginUser(User user) {
+        boolean isUserValid = userDAO.validateUserCredentials(user.getUserName(), user.getPassword());
+        if (!isUserValid) {
+            return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+        }
+        context.setCurrentUser(user);
+        return RESPONSE_OK;
+    }
+    
+    @Path("authenticated")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response isAuthenticated() {
+        if (context.getCurrentUser() == null) {
+            return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
+        }
+        return RESPONSE_OK;
+    }
+>>>>>>> Stashed changes
 
 	@Path("current")
 	@GET
@@ -79,6 +115,7 @@ public class UserManager {
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
 	public void logoutUser() {
+		System.out.println("user logging out");
 		context.setCurrentUser(null);
 	}
 

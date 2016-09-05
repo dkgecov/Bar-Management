@@ -9,6 +9,7 @@
 <script type="text/javascript">
 	function register() {
 		var formUrl = $("#register_form").attr("action");
+		console.log(formUrl);
 		var username = $("#userName")[0].value;
 		var password = $("#pwd")[0].value;
 		var email = $("#email")[0].value;
@@ -87,10 +88,19 @@
 </script>
 </head>
 <body>
-
-	<h1 align="center">
+	<div align="left">
+		<h2><a href="index.html">Simple Bar Management</a></h2>	
+	</div>
+	<hr>
+	<h2 align="center">
 		<b>REGISTRATION FORM</b>
-	</h1>
+	</h2>
+
+	<div class="login_register">
+		<a href="addingOrder.html" class="add_order_form">Add Order</a>
+		<a href="addItem.html" class="add_item_form">Add Items</a>
+		<a href="login.html" class="reg1ister_form"> Log in </a>
+	</div>
 
 	<form id="register_form" role="form" method="post">
 		<div class="form-group">
@@ -113,6 +123,7 @@
 				class="form-control" name="email" id="email" value="">
 		</div>
 
+<<<<<<< Updated upstream
 		<div class="form-group">
 			<label for="role">Role:</label> <select class="form-control"
 				name="role" id="role">
@@ -123,6 +134,8 @@
 			</select>
 		</div>
 
+=======
+>>>>>>> Stashed changes
 		<button type="reset" class="btn btn-default" id="reset_register">Reset</button>
 		<button type="button" onclick="register()" class="btn btn-default">Submit</button>
 	</form>

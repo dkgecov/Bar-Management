@@ -21,7 +21,15 @@ public class OrderDAO {
 	private EntityManager em;
 
 	public void addOrder(Order order) {
+<<<<<<< Updated upstream
 		order.calculateTotalPrice();
+=======
+		
+		order.setAcceptanceDay();
+		order.setAcceptanceWeek();
+		order.setAcceptanceMonth();
+
+>>>>>>> Stashed changes
 		em.persist(order);
 	}
 

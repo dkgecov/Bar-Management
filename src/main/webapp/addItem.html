@@ -40,7 +40,10 @@
 				}
 			}
 		}).success(function(data) {
-			$("#item_adding_form").attr("action", "addItem.html");
+<<<<<<< Updated upstream
+=======
+			$("#item_adding_form").attr("action", "index.html");
+>>>>>>> Stashed changes
 			$("#item_adding_form").submit();
 			alert("success");
 		}).fail(function(data) {
@@ -57,13 +60,35 @@
 			window.location.replace("login.html");
 		});
 	}
+	
+    function logout() {
+    	$.ajax({
+            url: 'rest/user/logout',
+            type: "GET",
+            dataType: "text"
+        }).always(function(data){
+        	window.location.replace("login.html");
+        });
+    }
+
 </script>
 </head>
 <body>
-
-	<h1 align="center">
+	<div align="left">
+		<h2><a href="index.html">Simple Bar Management</a></h2>	
+	</div>
+	<hr>
+	<h2 align="center">
 		<b>ITEM ADDING FORM</b>
-	</h1>
+	</h2>
+
+<!--	<div class="logout">
+		<a onclick="logout()"> Logout </a>
+	</div>  -->
+
+	<div class="login_register">
+		<a href="addingOrder.html" class="add_order_form">Add Order</a>
+	</div>
 
 	<form id="item_adding_form" role="form" method="post">
 		<div class="form-group">
@@ -85,6 +110,7 @@
 				class="form-control" name="description" id="description" value="">
 		</div>
 
+<<<<<<< Updated upstream
 		<div class="login_register">
 			<a href="index.html" class="login_form"> Main </a> <a
 				href="register.html" class="register_form"> Register </a>
@@ -94,6 +120,8 @@
 			<a onclick="logout()"> Logout </a>
 		</div>
 
+=======
+>>>>>>> Stashed changes
 		<button type="reset" class="btn btn-default" id="reset_add_item">Reset</button>
 		<button type="button" onclick="addItem()" class="btn btn-default">Submit</button>
 	</form>

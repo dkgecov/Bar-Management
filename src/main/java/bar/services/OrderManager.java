@@ -28,6 +28,17 @@ public class OrderManager {
 	@Inject
 	private UserContext userContext;
 
+	@Path("order")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response order(Order newOrder) {
+		System.out.println(String.format("New Order = %s", newOrder.toString()));
+		System.out.println(String.format("tableNumber = %d, itemName = %s, count = %d", 
+										 newOrder.getTableNumber(), newOrder.getItemName(), newOrder.getCount()));
+		orderDAO.addOrder(newOrder);
+		return RESPONSE_OK;
+	}
+	
 	@GET
 	@Path("/getAll")
 	@Produces("application/json")
@@ -42,11 +53,5 @@ public class OrderManager {
 		return orderDAO.getCurrentUserOrders(userContext.getCurrentUser());
 	}
 	
-	@Path("/order")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response order(Order newOrder) {
-		orderDAO.addOrder(newOrder);
-		return Response.noContent().build();
-	}
+
 }
