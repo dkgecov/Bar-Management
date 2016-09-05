@@ -6,20 +6,21 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-import bar.dao.ProfitDAO;
+import bar.dao.OrderDAO;
+
 
 @Stateless
 @Path("report")
 public class ReportManager {
 	@Inject 
-	private ProfitDAO profitDAO;
+	private OrderDAO orderDAO;
 	
 	
 	@GET
 	@Path("daily")
 	@Produces("application/json")
 	public float getDailyProfit(){
-		return profitDAO.estimateDailyProfit();
+		return orderDAO.estimateDailyProfit();
 		
 	}
 	
@@ -28,14 +29,14 @@ public class ReportManager {
 	@Path("weekly")
 	@Produces("application/json")
 	public float getWeeklyProfit(){
-		return profitDAO.estimateWeeklyProfit();
+		return orderDAO.estimateWeeklyProfit();
 		
 	}
 	@GET
 	@Path("monthly")
 	@Produces("application/json")
 	public float getMonthlyProfit(){
-		return profitDAO.estimateMonthlyProfit();
+		return orderDAO.estimateMonthlyProfit();
 		
 	}
 	
