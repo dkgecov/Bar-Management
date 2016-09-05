@@ -6,118 +6,125 @@
 <link rel="stylesheet" type="text/css" href="styles/bar.css" />
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
-    isUserAuthenticated = false;
+	isUserAuthenticated = false;
 
 	$(document).ready(function() {
 		$.ajax({
-		    url: 'rest/user/authenticated',
-		    type: "GET",
-            dataType : "json",
-		    statusCode: {
-			        200: function() {
-			        	$( ".login_register" ).hide();
-                        isUserAuthenticated = true;
-			        },
-			        404: function() {
-			        	$('.logout').hide();
-			        }
-		        }
-		    });
-        drawTableWithBooks();
+			url : 'rest/user/authenticated',
+			type : "GET",
+			dataType : "json",
+			statusCode : {
+				200 : function() {
+					$(".login_register").hide();
+					isUserAuthenticated = true;
+				},
+				404 : function() {
+					$('.logout').hide();
+				}
+			}
+		});
+		drawTableWithOrders();
 
-        $.ajax({
-            url: 'rest/user/current',
-            type: "GET",
-            dataType : "text"
-        }).always(function(data){
-            if (typeof data != 'undefined') {
-                $("#user-holder").text(data);
-            } else {
-                $(".welcome-greeting").hide();
-            }
-        });
+		$.ajax({
+			url : 'rest/user/current',
+			type : "GET",
+			dataType : "text"
+		}).always(function(data) {
+			if (typeof data != 'undefined') {
+				$("#user-holder").text(data);
+			} else {
+				$(".welcome-greeting").hide();
+			}
+		});
 	});
 
-    function drawTableWithBooks() {
-        $.ajax({
-            url : 'rest/book',
-            type : "GET",
-            dataType : "json",
-            success : function(data) {
-                renderTable(data);
-            }
-        });
-    }
+	function drawTableWithOrders() {
+		$.ajax({
+			url : 'rest/order',
+			type : "GET",
+			dataType : "json",
+			success : function(data) {
+				if (data != null) {
+					renderTable(data);
+				}
+				else {
+					alert("Access to orders forbidden!");
+					return;
+				}
+			}
+		});
+	}
 
-    function renderTable(data) {
-        $("#books_table tr").remove();
-        var books = data.book;
-        for (var i = 0; i < books.length; i++) {
-            renderRow(books[i]);
-        }
-    }
+	function renderTable(data) {
+		$("#orders_table tr").remove();
+		var orders = data.order;
+		for (var i = 0; i < orders.length; i++) {
+			renderRow(orders[i]);
+		}
+	}
 
-    function renderRow(rowData) {
-        var row = $("<tr />")
-        $("#books_table").append(row);
-        row.append($("<td>" + rowData.title + "</td>"));
-        row.append($("<td>" + rowData.author + "</td>"));
-        row.append($("<td>" + rowData.isbn + "</td>"));
-        row.append($("<td>" + rowData.amount + "</td>"));
-        if (isUserAuthenticated && rowData.amount > 0) {
-            var borrowTd = $("<td />");
-            var link = $("<button>Borrow</button>");
-            borrowTd.append(link);
-            row.append(borrowTd);
-            link.click(function() {
-                $.ajax({
-                    url: 'rest/book/borrow?bookId=' + rowData.id,
-                    type: "PUT",
-                    dataType: "json",
-                    success: drawTableWithBooks
-                });
-            });
-        } else {
-            row.append($("<td/>"));
-        }
-    }
-    
-    function logout() {
-    	$.ajax({
-            url: 'rest/user/logout',
-            type: "GET",
-            dataType: "text"
-        }).always(function(data){
-        	window.location.replace("login.html");
-        });
-    }
+	function renderRow(rowData) {
+		var row = $("<tr />");
+		$("#orders_table").append(row);
+		row.append($("<td>" + rowData.executor.userName + "</td>"));
+		row.append($("<td>" + rowData.status + "</td>"));
+		row.append($("<td>" + rowData.dateOfOrder + "</td>"));
+		row.append($("<td>" + rowData.dateOfAcceptance + "</td>"));
+		if (isUserAuthenticated && rowData.amount > 0) {
+			var acceptTd = $("<td />");
+			var link = $("<button>Accept</button>");
+			AcceptTd.append(link);
+			row.append(acceptTd);
+			link.click(function() {
+				$.ajax({
+					url : 'rest/book/borrow?bookId=' + rowData.id,
+					type : "PUT",
+					dataType : "json",
+					success : drawTableWithBooks
+				});
+			});
+		} else {
+			row.append($("<td/>"));
+		}
+	}
 
+	function logout() {
+		$.ajax({
+			url : 'rest/user/logout',
+			type : "GET",
+			dataType : "text"
+		}).always(function(data) {
+			window.location.replace("login.html");
+		});
+	}
 </script>
 
 </head>
 <body>
 	<div align="center">
-		<h1>Library Application</h1>
+		<h1>Orders Application</h1>
 	</div>
 	<div>
-		<table id="books_table" class="table">
+		<table id="orders_table" class="table">
 			<tr>
 				<th>Title</th>
 				<th>Author</th>
 				<th>ISBN</th>
 				<th>Amount</th>
-                <th>Action</th>
+				<th>Action</th>
 			</tr>
 		</table>
 	</div>
 
 	<div class="login_register">
-		<a href="login.html" class="login_form"> Log in </a>
-        <a href="register.html" class="register_form"> Register </a>
+		<a href="login.html" class="login_form"> Log in </a> <a
+			href="register.html" class="register_form"> Register </a>
 	</div>
 	<div class="logout">
 		<a onclick="logout()"> Logout </a>
 	</div>
-    <div class="welcome-greeting">Welcome <span id="user-holder"></span> !</div>
+	<div class="welcome-greeting">
+		Welcome <span id="user-holder"></span> !
+	</div>
 </body>
 </html>
