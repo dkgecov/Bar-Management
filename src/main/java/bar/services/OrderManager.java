@@ -29,8 +29,9 @@ public class OrderManager {
 	private UserContext userContext;
 
 	@GET
+	@Path("/getAll")
 	@Produces("application/json")
-	public Collection<Order> getWaitingOrders(@PathParam("bookId") String bookId) {
+	public Collection<Order> getAllWaitingOrders() {
 		return orderDAO.getAllWaitingOrders();
 	}
 
