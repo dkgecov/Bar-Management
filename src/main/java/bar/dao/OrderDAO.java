@@ -19,13 +19,7 @@ public class OrderDAO {
 	private EntityManager em;
 
 	public void addOrder(Order order) {
-		
-		order.setAcceptanceDay();
-		order.setAcceptanceWeek();
-		order.setAcceptanceMonth();
-		
-		
-		
+								
 		em.persist(order);
 	}
 

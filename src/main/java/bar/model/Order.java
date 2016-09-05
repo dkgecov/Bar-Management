@@ -65,12 +65,12 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Status status, Calendar dateOfOrder) {
+	public Order( List<Item> itemsInOrder) {
 		super();
-		this.status = status;
-		this.dateOfOrder = dateOfOrder;
+		this.status = Status.WAITING;
+		this.dateOfOrder=Calendar.getInstance();
 		this.totalPrice = 0.0f;
-		
+		this.itemsInOrder=itemsInOrder;
 	}
 
 	
