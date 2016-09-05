@@ -2,6 +2,9 @@ package bar.services;
 
 import java.net.HttpURLConnection;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -16,6 +19,7 @@ import bar.model.User;
 
 @Stateless
 @Path("user")
+@DeclareRoles({ "Manager", "Waiter", "Barman" })
 public class UserManager {
 
 	private static final Response RESPONSE_OK = Response.ok().build();
@@ -28,7 +32,12 @@ public class UserManager {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@RolesAllowed("Manager")
 	public Response registerUser(User newUser) {
+		if (!context.isCallerInRole("Manager")) {
+			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
+		}
+
 		boolean userNameExists = userDAO.userNameExists(newUser.getUserName());
 		boolean emailExists = userDAO.emailExists(newUser.getEmail());
 
@@ -38,6 +47,7 @@ public class UserManager {
 		if (emailExists) {
 			return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
 		}
+
 		userDAO.addUser(newUser);
 		context.setCurrentUser(newUser);
 		return RESPONSE_OK;
@@ -46,6 +56,7 @@ public class UserManager {
 	@Path("login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public Response loginUser(User user) {
 		boolean isUserValid = userDAO.validateUserCredentials(user.getUserName(), user.getPassword());
 		if (!isUserValid) {
@@ -59,12 +70,14 @@ public class UserManager {
 	@Path("authenticated")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
+	@PermitAll
 	public Response isAuthenticated() {
 		if (context.getCurrentUser() == null) {
 			return Response.status(HttpURLConnection.HTTP_NOT_FOUND).build();
 		}
 		return RESPONSE_OK;
 	}
+<<<<<<< HEAD
 =======
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -101,9 +114,13 @@ public class UserManager {
     }
 >>>>>>> Stashed changes
 
+=======
+//Ползва ли се във jquery?
+>>>>>>> a3c553f9bde3d09a7c278a13ed3e95ae9b72c0a7
 	@Path("current")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
+	@PermitAll
 	public String getUser() {
 		if (context.getCurrentUser() == null) {
 			return null;
@@ -114,6 +131,7 @@ public class UserManager {
 	@Path("logout")
 	@GET
 	@Consumes(MediaType.TEXT_PLAIN)
+	@PermitAll
 	public void logoutUser() {
 		System.out.println("user logging out");
 		context.setCurrentUser(null);

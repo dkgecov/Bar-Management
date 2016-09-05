@@ -53,20 +53,30 @@ public class OrderDAO {
 		}
 	}
 
-	public void setOrderAsOverdue(Order order) {
-		Order foundOrder = findById(order.getId());
-		if (foundOrder.getStatus() == Status.ACCEPTED)
-			foundOrder.setStatus(Status.OVERDUE);
+	
+	public void setOrderAsAccepted(long id){
+		
+		Status status = Status.WAITING;
+				
+		Query query = em.createQuery( "UPDATE Order o SET o.status=:status WHERE o.id=:id");
+		query.setParameter("status", status);
+		query.setParameter("id", id);
+		
+			  int updateCount = query.executeUpdate();
 	}
-
-	public void setOrderAsAccepted(Order order, User user) {
-		Order foundOrder = findById(order.getId());
-		if (foundOrder.getStatus() == Status.WAITING && foundOrder.getExecutor() == null) {
-			foundOrder.setStatus(Status.ACCEPTED);
-			foundOrder.setExecutor(user);
-		}
+	
+	public void setOrderAsOverdue(long id){
+		
+		Status status = Status.OVERDUE;
+				
+		Query query = em.createQuery( "UPDATE Order o SET o.status=:status WHERE o.id=:id");
+		query.setParameter("status", status);
+		query.setParameter("id", id);
+		
+			  int updateCount = query.executeUpdate();
 	}
-
+	
+	
 	public Order findById(long key) {
 		return em.find(Order.class, key);
 	}
@@ -82,7 +92,10 @@ public class OrderDAO {
 
 		Query q = em.createQuery(
 				"SELECT SUM(o.totalPrice) FROM Order o WHERE o.acceptanceDay=:day AND o.acceptanceWeek=:week AND o.acceptanceMonth=:month AND o.status=:status ");
-
+		q.setParameter("day", day);
+		q.setParameter("week", week);
+		q.setParameter("month", month);
+		q.setParameter("status", status);
 		try {
 			return (float) q.getSingleResult();
 		} catch (Exception e) {
@@ -101,7 +114,10 @@ public class OrderDAO {
 
 		Query q = em.createQuery(
 				"SELECT SUM(o.totalPrice) FROM Order o WHERE o.acceptanceWeek=:week AND o.acceptanceMonth=:month AND o.status=:status ");
-
+		q.setParameter("week", week);
+		q.setParameter("month", month);
+		q.setParameter("status", status);
+		
 		try {
 			return (float) q.getSingleResult();
 		} catch (Exception e) {
@@ -119,7 +135,9 @@ public class OrderDAO {
 
 		Query q = em.createQuery(
 				"SELECT SUM(o.totalPrice) FROM Order o WHERE o.acceptanceMonth=:month AND o.status=:status ");
-
+		q.setParameter("month", month);
+		q.setParameter("status", status);
+		
 		try {
 			return (float) q.getSingleResult();
 		} catch (Exception e) {
@@ -127,5 +145,9 @@ public class OrderDAO {
 		}
 
 	}
+	
+	
+	
+	
 
 }
