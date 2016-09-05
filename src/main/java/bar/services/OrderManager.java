@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -49,4 +50,36 @@ public class OrderManager {
 		orderDAO.addOrder(newOrder);
 		return Response.noContent().build();
 	}
+	
+	
+	@Path("/acceptOrder")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	  public void setOrderAsAccepted(@QueryParam("orderId") String orderId) {
+       
+		orderDAO.setOrderAsAccepted(Long.parseLong(orderId));
+		
+    }
+	
+	
+	@Path("/overdueOrder")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	  public void setOrderAsOverdue(@QueryParam("orderId") String orderId) {
+       
+		orderDAO.setOrderAsOverdue(Long.parseLong(orderId));
+		
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
