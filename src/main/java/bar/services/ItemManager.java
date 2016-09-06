@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 import java.util.Collection;
 
 import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -33,13 +34,8 @@ public class ItemManager {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@RolesAllowed("Manager")
+	@PermitAll
 	public Response addNewItem(Item newItem) {
-
-		if (!context.isCallerInRole("Manager")) {
-			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
-		}
-
 		itemDAO.addItem(newItem);
 		return RESPONSE_OK;
 	}
@@ -47,11 +43,9 @@ public class ItemManager {
 	@Path("/items")
 	@GET
 	@Produces("application/json")
-	@RolesAllowed({ "Manager", "Waiter" })
+	@PermitAll
 	public Collection<Item> getAllItems() {
-		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
-			return null;
-		}
+
 		return itemDAO.getAllItems();
 	}
 

@@ -1,24 +1,20 @@
 package bar.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 
 @Entity
 @XmlRootElement
-@Table(name = "ITEMS")
 @NamedQueries({
 		@NamedQuery(name = "findByPriceAndName", query = "SELECT i FROM Item i WHERE i.itemName = :name AND i.price = :price"),
-		@NamedQuery(name = "getAllItems", query = "SELECT i FROM Item i") })
-
+		@NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b") })
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = 4654489222889729922L;
@@ -27,16 +23,12 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column
 	private String itemName;
 
-	@Column
 	private String price;
 
-	@Column
 	private String type;
 
-	@Column
 	private String description;
 
 	public Item() {

@@ -34,7 +34,6 @@ public class OrderManager {
 	@Inject
 	private UserContext context;
 
-	@Path("order")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@RolesAllowed({ "Manager", "Waiter" })
