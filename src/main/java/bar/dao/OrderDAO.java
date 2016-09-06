@@ -48,30 +48,29 @@ public class OrderDAO {
 		}
 	}
 
-	public void setOrderAsAccepted(long id) {
-
-		Status status = Status.WAITING;
-
-		Query query = em.createQuery("UPDATE Order o SET o.status=:status WHERE o.id=:id");
-		query.setParameter("status", status);
-		query.setParameter("id", id);
-
-		int updateCount = query.executeUpdate();
-	}
-
-	public void setOrderAsOverdue(long id, User user) {
-
-		Query query = em.createQuery("UPDATE Order o SET o.EXECUTOR_ID=:executor,o.status=:status WHERE o.id=:id");
-		query.setParameter("executor", user.getId());
-		query.setParameter("status", Status.OVERDUE);
-		query.setParameter("id", id);
-
-		int updateCount = query.executeUpdate();
-	}
-
 	public Order findById(long key) {
 		return em.find(Order.class, key);
 	}
+	
+	
+	public void setOrderAsAccepted(long id, User Executor) {
+	
+		Order orderToAccept=findById(id);
+		
+		orderToAccept.setStatus(Status.ACCEPTED);
+		
+		Executor.getCurrentOrders().add(orderToAccept);
+		
+	}	
+	
+	public void setOrderAsOverdue(long id) {
+			
+		Order overdueOrder=findById(id);
+		overdueOrder.setStatus(Status.OVERDUE);
+	}
+	
+	
+	
 
 	public float estimateDailyProfit() {
 

@@ -99,7 +99,7 @@ public class OrderManager {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-		orderDAO.setOrderAsAccepted(Long.parseLong(orderId));
+		orderDAO.setOrderAsAccepted(Long.parseLong(orderId),context.getCurrentUser());
 		return RESPONSE_OK;
 	}
 
@@ -111,7 +111,7 @@ public class OrderManager {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-		orderDAO.setOrderAsOverdue(Long.parseLong(orderId), context.getCurrentUser());
+		orderDAO.setOrderAsOverdue(Long.parseLong(orderId));
 
 		return RESPONSE_OK;
 	}
