@@ -10,15 +10,52 @@
 	function order() {
 		var formUrl = $("#order_form").attr("action");
 		console.log(formUrl);
-		var username = $("#userName")[0].value;
-		var password = $("#pwd")[0].value;
-		var email = $("#email")[0].value;
+		var tableName = $("#tableName")[0].value;
 
-		if (username == "") {
-			alert("Please fill username");
+		if (tableName == "") {
+			alert("Please fill table name");
 			return;
 		}
 
+		drawTableWithItems();
+		
+		$.ajax({
+			url : 'rest/user/current',
+			type : "GET",
+			dataType : "text"
+		}).always(function(data) {
+			if (typeof data != 'undefined') {
+				$("#user-holder").text(data);
+			} else {
+				$(".welcome-greeting").hide();
+			}
+		});
+	});
+		
+	function drawTableWithItems() {
+		$.ajax({
+			url : 'rest/order/waiting',
+			type : "GET",
+			dataType : "json",
+			success : function(data) {
+				if (data != null) {
+					renderTable(data);
+				} else {
+					alert("Access to items forbidden!");
+					return;
+				}
+			}
+		});
+	}
+	
+	function renderTable(data) {
+		$("#items_table tr").remove();
+		var items = data.item;
+		for (var i = 0; i < items.length; i++) {
+			renderRow(items[i]);
+		}
+	}
+	
 		var data = {
 			order : {
 				tableNumber : username,
@@ -45,30 +82,38 @@
 </head>
 <body>
 	<div align="left">
-		<h2><a href="index.html">Simple Bar Management</a></h2>	
+		<h2>
+			<a href="index.html">Simple Bar Management</a>
+		</h2>
 	</div>
 	<hr>
-	<h2 align="center">
-		<b>ADDING ORDER FORM</b>
-	</h2>
+	<h1 align="center">
+		<b>ORDERING</b>
+	</h1>
+	<div>
+		<table id="orders_table" class="table">
+			<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>ISBN</th>
+				<th>Amount</th>
+				<th>Action</th>
+			</tr>
+		</table>
+	</div>
+
 
 	<div class="login_register">
-		<a href="addOrder.html" class="add_order_form">Add Order</a>
-		<a href="addItem.html" class="add_item_form">Add Items</a>
-		<a href="login.html" class="register_form"> Log in </a>
+		<a href="addOrder.html" class="add_order_form">Add Order</a> <a
+			href="addItem.html" class="add_item_form">Add Items</a> <a
+			href="login.html" class="register_form"> Log in </a>
 	</div>
 
 	<form id="order_form" role="form" method="post">
 		<div class="form-group">
-			<label for="userName">Table Number:</label> <input type="text"
-				class="form-control" name="username" id="userName" value="">
+			<label for="tableName">Table Number:</label> <input type="text"
+				class="form-control" name="userName" id="userName" value="">
 		</div>
-		<div class="form-group">
-			<label for="pwd">Item Name:</label> <input type="password"
-				class="form-control" name="password" id="pwd" value="">
-		</div>   
-		
-		
 
 		<div class="form-group">
 			<label for="email">Count:</label> <input type="email"

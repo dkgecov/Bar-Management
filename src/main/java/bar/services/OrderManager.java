@@ -46,9 +46,11 @@ public class OrderManager {
 		return RESPONSE_OK;
 	}
 
+	@Path("waiting")
 	@GET
 	@Produces("application/json")
 	@RolesAllowed({ "Manager", "Barman" })
+	
 	public Collection<Order> getAllWaitingOrders() {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return null;
@@ -109,7 +111,7 @@ public class OrderManager {
 		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
-		orderDAO.setOrderAsOverdue(Long.parseLong(orderId));
+		orderDAO.setOrderAsOverdue(Long.parseLong(orderId), context.getCurrentUser());
 
 		return RESPONSE_OK;
 	}

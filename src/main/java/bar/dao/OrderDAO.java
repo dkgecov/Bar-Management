@@ -59,12 +59,11 @@ public class OrderDAO {
 		int updateCount = query.executeUpdate();
 	}
 
-	public void setOrderAsOverdue(long id) {
+	public void setOrderAsOverdue(long id, User user) {
 
-		Status status = Status.OVERDUE;
-
-		Query query = em.createQuery("UPDATE Order o SET o.status=:status WHERE o.id=:id");
-		query.setParameter("status", status);
+		Query query = em.createQuery("UPDATE Order o SET o.EXECUTOR_ID=:executor,o.status=:status WHERE o.id=:id");
+		query.setParameter("executor", user.getId());
+		query.setParameter("status", Status.OVERDUE);
 		query.setParameter("id", id);
 
 		int updateCount = query.executeUpdate();

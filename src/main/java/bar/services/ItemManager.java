@@ -49,6 +49,9 @@ public class ItemManager {
 	@Produces("application/json")
 	@RolesAllowed({ "Manager", "Waiter" })
 	public Collection<Item> getAllItems() {
+		if (!(context.isCallerInRole("Manager") | context.isCallerInRole("Barman"))) {
+			return null;
+		}
 		return itemDAO.getAllItems();
 	}
 

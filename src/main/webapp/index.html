@@ -46,8 +46,7 @@
 			success : function(data) {
 				if (data != null) {
 					renderTable(data);
-				}
-				else {
+				} else {
 					alert("Access to orders forbidden!");
 					return;
 				}
@@ -68,8 +67,7 @@
 		$("#orders_table").append(row);
 		row.append($("<td>" + rowData.executor.userName + "</td>"));
 		row.append($("<td>" + rowData.status + "</td>"));
-		row.append($("<td>" + rowData.dateOfOrder + "</td>"));
-		row.append($("<td>" + rowData.dateOfAcceptance + "</td>"));
+
 		if (isUserAuthenticated && rowData.amount > 0) {
 			var acceptTd = $("<td />");
 			var link = $("<button>Accept</button>");
@@ -78,9 +76,9 @@
 			link.click(function() {
 				$.ajax({
 					url : 'rest/order/accept?id=' + rowData.id,
-					type : "PUT",
+					type : "POST",
 					dataType : "json",
-					success : drawTableWithBooks
+					success : drawTableWithOrders()
 				});
 			});
 		} else {
@@ -101,13 +99,13 @@
 
 </head>
 <body>
-<<<<<<< HEAD
 	<div align="left">
-		<h2><a href="index.html">Simple Bar Management</a></h2>	
-=======
+		<h2>
+			<a href="index.html">Simple Bar Management</a>
+		</h2>
+	</div>
 	<div align="center">
 		<h1>Orders Application</h1>
->>>>>>> a3c553f9bde3d09a7c278a13ed3e95ae9b72c0a7
 	</div>
 	<hr>
 	<div>
@@ -123,15 +121,13 @@
 	</div>
 
 	<div class="login_register">
-<<<<<<< HEAD
-		<a href="addingOrder.html" class="add_order_form">Add Order</a>
-		<a href="addItem.html" class="add_item_form">Add Items</a>
-		<a href="login.html" class="login_form"> Log in </a>
-        <a href="register.html" class="register_form"> Register </a>
-=======
-		<a href="login.html" class="login_form"> Log in </a> <a
+		<a href="addingOrder.html" class="add_order_form">Add Order</a> <a
+			href="addItem.html" class="add_item_form">Add Items</a> <a
+			href="login.html" class="login_form"> Log in </a> <a
+			href="register.html" class="register_form"> Register </a> <a
+			href="login.html" class="login_form"> Log in </a> <a
 			href="register.html" class="register_form"> Register </a>
->>>>>>> a3c553f9bde3d09a7c278a13ed3e95ae9b72c0a7
+
 	</div>
 	<div class="logout">
 		<a onclick="logout()"> Logout </a>
