@@ -22,20 +22,13 @@ public class ItemDAO {
 	public Item findItemByName(String itemName) {
 		String txtQuery = "SELECT i FROM Item i WHERE i.itemName = :itemName";
 		TypedQuery<Item> query = em.createQuery(txtQuery, Item.class);
-		query.setParameter("itemName", itemName);// преди да извикаме
-													// getResultList или
-													// SingleResult (понеже е
-													// резултата е в суров вид)
+		query.setParameter("itemName", itemName);
 		return queryItem(query);
 	}
 
 	private Item queryItem(TypedQuery<Item> query) {
 		try {
-			return query.getSingleResult();// може да върнем и
-											// query.getResultList().get(0); но
-											// в случая знаем че се очаква един
-											// обект и затова ползваме
-											// getSingleResult
+			return query.getSingleResult();
 		} catch (Exception e) {
 			return null;
 		}

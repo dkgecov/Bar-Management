@@ -91,7 +91,7 @@ public class User implements Serializable {
 		return this.currentOrders;
 	}
 
-	public void setCurrentItems(final Set<Order> currentOrders) {
+	public void setCurrentOrders(final Set<Order> currentOrders) {
 		this.currentOrders = currentOrders;
 	}
 

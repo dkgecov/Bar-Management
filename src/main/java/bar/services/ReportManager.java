@@ -1,5 +1,7 @@
 package bar.services;
 
+import java.util.Date;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -26,22 +28,11 @@ public class ReportManager {
 	
 	
 	@GET
-	@Path("weekly")
+	@Path("between")
 	@Produces("application/json")
-	public float getWeeklyProfit(){
-		return orderDAO.estimateWeeklyProfit();
-		
+	public float getWeeklyProfit(Date begDate,Date endDate){
+		return orderDAO.estimateProfitBetweenTwoDates(begDate,endDate);
 	}
-	@GET
-	@Path("monthly")
-	@Produces("application/json")
-	public float getMonthlyProfit(){
-		return orderDAO.estimateMonthlyProfit();
-		
-	}
-	
-	
-	
 	
 
 }
