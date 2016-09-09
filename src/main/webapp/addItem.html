@@ -21,10 +21,13 @@
 					isUserAuthenticated = true;
 				},
 				404 : function() {
-					$('.logout').hide();
+					window.location.replace("login.html");
+					
 				}
 			}
 		});
+		
+		
 		
 		$.ajax({
 			url : 'rest/user/current',
@@ -37,6 +40,8 @@
 				$(".welcome-greeting").hide();
 			}
 		});
+		
+		
 	});
 	
 	function addItem() {
@@ -129,25 +134,22 @@
 			<label for="price">Price:</label> <input type="text"
 				class="form-control" name="price" id="price" value="">
 		</div>
-
 		<div class="form-group">
 			<label for="type">Type:</label> <input type="text"
 				class="form-control" name="type" id="type" value="">
 		</div>
-
 		<div class="form-group">
 			<label for="description">Description:</label> <input type="text"
 				class="form-control" name="description" id="description" value="">
 		</div>
-
 		
-
-		<div class="logout">
-			<a onclick="logout()"> Logout </a>
-		</div>
+		
 
 		<button type="reset" class="btn btn-default" id="reset_add_item">Reset</button>
 		<button type="button" onclick="addItem()" class="btn btn-default">Submit</button>
 	</form>
+		<div class="logout">
+			<a onclick="logout()"> Logout </a>
+		</div>
 </body>
 </html>

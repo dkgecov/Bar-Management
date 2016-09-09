@@ -14,7 +14,7 @@ import java.io.Serializable;
 @XmlRootElement
 @NamedQueries({
 		@NamedQuery(name = "findByPriceAndName", query = "SELECT i FROM Item i WHERE i.itemName = :name AND i.price = :price"),
-		@NamedQuery(name = "getAllItems", query = "SELECT b FROM Item b") })
+		@NamedQuery(name = "getAllItems", query = "SELECT i FROM Item i")})
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = 4654489222889729922L;

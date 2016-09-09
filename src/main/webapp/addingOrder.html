@@ -25,8 +25,6 @@
 			}
 		});
 
-		var data = [];
-
 		drawTableWithItems();
 
 		$.ajax({
@@ -48,18 +46,13 @@
 			type : "GET",
 			dataType : "json",
 			success : function(data) {
-				// 				if (typeof data != 'undefined') {
 				renderTable(data);
-				/* 	} else {
-						alert("Access to items forbidden!");
-						return;
-					} */
 			}
 		});
 	}
-
+	
 	function renderTable(data) {
-		$("#items_table tr").remove();
+		$("#items_table").remove();
 		var items = data.item;
 		console.log(data);
 		for (var i = 0; i < items.length; i++) {
@@ -67,23 +60,26 @@
 			console.log("row rendered");
 		}
 	}
-
+	
 	function renderRow(rowData) {
 		var row = $("<tr />");
-		row.attr("id")
-		$("#items_table").append(row);
+		var tableID = '#tableOf_' + rowData.type.replace(/ /g, '_');
+		if(!$(tableID).length){
+			createTable(rowData.type);
+		}
+		$(tableID + ' table').append(row);
 		row.append($("<td>" + rowData.id + "</td>"));
 		row.append($("<td>" + rowData.itemName + "</td>"));
 		row.append($("<td>" + rowData.price + "</td>"));
 		row.append($("<td>" + rowData.type + "</td>"));
 		row.append($("<td>" + rowData.description + "</td>"));
 
-		if (isUserAuthenticated && rowData.amount > 0) {
+		if (isUserAuthenticated) {
 			var addTd = $("<td />");
 			var link = $("<button>Add</button>");
 			link.attr("id", rowData.id);
-			AddTd.append(link);
-			row.append(acceptTd);
+			addTd.append(link);
+			row.append(addTd);
 			link.click(function() {
 				listOfItemsToOrder.push(this.id)
 			});
@@ -92,6 +88,24 @@
 		}
 	}
 
+	function createTable(type){
+		var link = $("<button class='slide_button'></button>");
+		link.attr("id", type.replace(/ /g, '_'));
+		link.html(type);
+		$("#tables").append(link);
+		
+		var div = $("<div class='table_div'></div>");
+		div.attr("id", 'tableOf_' + type.replace(/ /g, '_'));
+		var table = $("<table></table>");
+		div.append(table);
+		table.attr("class", "table");
+		$("#tables").append(div);
+		link.click(function() {
+			$('#tableOf_' + type.replace(/ /g, '_')).slideToggle("fast");
+		});
+		
+	}
+	
 	function order() {
 		var formUrl = $("#order_form").attr("action");
 		var tableNumber = $("#tableNumber")[0].value;
@@ -125,25 +139,27 @@
 	<h1 align="center">
 		<b>ORDERING</b>
 	</h1>
-	<div>
+	<div id="tables">
 		<table id="items_table" class="table">
 			<tr>
-				<th>Title</th>
-				<th>Author</th>
-				<th>ISBN</th>
-				<th>Amount</th>
-				<th>Action</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Type</th>
+				<th>Description</th>
 			</tr>
 		</table>
 	</div>
 
 
 	<div class="login_register">
-
 		<a href="login.html" class="register_form"> Log in </a>
 	</div>
 
-	<div>
+	<div class="logout">
+		<a href="login.html" onclick="logout()"> Logout </a>
+	</div>
+	
+	<div class="add_order">
 		<a href="addOrder.html" class="add_order_form">Add Order</a>
 		<a href="addItem.html" class="add_item_form">Add Items</a>
 	</div>

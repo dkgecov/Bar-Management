@@ -1,7 +1,6 @@
 package bar.dao;
 
 import java.util.Collection;
-
 import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

@@ -1,7 +1,6 @@
 package bar.services;
 
 import java.util.Collection;
-
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
