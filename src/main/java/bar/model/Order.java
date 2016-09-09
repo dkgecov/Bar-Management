@@ -1,6 +1,5 @@
 package bar.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -61,13 +60,10 @@ public class Order implements Serializable {
 
 	private int tableNumber;
 
-	private String itemName;
-
 	private int count;
 
 	public Order(int tableNumber, String itemName, int count) {
 		this.tableNumber = tableNumber;
-		this.itemName = (itemName);
 		this.count = count;
 		this.status = Status.WAITING;
 		this.dateOfAcceptance = Calendar.getInstance();
@@ -75,7 +71,6 @@ public class Order implements Serializable {
 		this.acceptanceWeek = 0;
 		this.acceptanceMonth = 0;
 		this.totalPrice = 0.0f;
-		this.status = Status.WAITING;
 	}
 
 	public Order() {
@@ -85,9 +80,7 @@ public class Order implements Serializable {
 		this.acceptanceWeek = 0;
 		this.acceptanceMonth = 0;
 		this.totalPrice = 0.0f;
-		this.status = Status.WAITING;
 		this.tableNumber = -1;
-		this.itemName = "";
 		this.count = 0;
 	}
 
@@ -97,15 +90,10 @@ public class Order implements Serializable {
 		this.dateOfOrder=Calendar.getInstance();
 		this.totalPrice = 0.0f;
 		this.itemsInOrder=itemsInOrder;
-		this.status = status;
-		this.dateOfOrder = dateOfOrder;
 		this.acceptanceDay = 0;
 		this.acceptanceWeek = 0;
 		this.acceptanceMonth = 0;
-		this.totalPrice = 0.0f;
-		this.status = Status.WAITING;
 		this.tableNumber = -1;
-		this.itemName = "";
 		this.count = 0;
 	}
 
@@ -195,24 +183,12 @@ public class Order implements Serializable {
 		setTotalPrice(sumPrice);
 	}
 
-	public String getItemName() {
-		return itemName;
-	}
-
 	public int getTableNumber() {
 		return tableNumber;
 	}
 
 	public int getCount() {
 		return count;
-	}
-
-	public void setItemName(String itemName) {
-		if (itemName == null) {
-			this.itemName = itemName;
-		} else {
-			this.itemName = "";
-		}
 	}
 
 	void setTableNumber(int tableNumber) {
@@ -244,8 +220,7 @@ public class Order implements Serializable {
 				calculateTotalPrice();
 			result += "Total price: " + getTotalPrice() + "\n";
 		}
-		result += String.format("tableNumber=%d, itemName=%s count=%d", this.tableNumber, this.itemName, this.count);
-
+		
 		return result;
 	}
 

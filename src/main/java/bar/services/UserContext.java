@@ -21,7 +21,4 @@ public class UserContext implements Serializable {
 		this.currentUser = currentUser;
 	}
 
-	public boolean isCallerInRole(String role) {
-		return currentUser.getRole().equals(role);
-	}
 }
