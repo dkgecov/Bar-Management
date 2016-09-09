@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -41,22 +42,16 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dateOfOrder;
+	@Temporal(TemporalType.DATE)
+	private Date dateOfOrder;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar dateOfAcceptance;
+	@Temporal(TemporalType.DATE)
+	private Date dateOfAcceptance;
 
 	@ManyToMany
 	private List<Item> itemsInOrder = new ArrayList<>();
 
 	private float totalPrice;
-
-	private int acceptanceDay;
-
-	private int acceptanceWeek;
-
-	private int acceptanceMonth;
 
 	private int tableNumber;
 
@@ -66,19 +61,15 @@ public class Order implements Serializable {
 		this.tableNumber = tableNumber;
 		this.count = count;
 		this.status = Status.WAITING;
-		this.dateOfAcceptance = Calendar.getInstance();
-		this.acceptanceDay = 0;
-		this.acceptanceWeek = 0;
-		this.acceptanceMonth = 0;
+		this.dateOfAcceptance = new Date();
+
 		this.totalPrice = 0.0f;
 	}
 
 	public Order() {
 		this.status = Status.WAITING;
-		this.dateOfAcceptance = Calendar.getInstance();
-		this.acceptanceDay = 0;
-		this.acceptanceWeek = 0;
-		this.acceptanceMonth = 0;
+		this.dateOfAcceptance = new Date();
+
 		this.totalPrice = 0.0f;
 		this.tableNumber = -1;
 		this.count = 0;
@@ -87,12 +78,10 @@ public class Order implements Serializable {
 	public Order( List<Item> itemsInOrder) {
 		super();
 		this.status = Status.WAITING;
-		this.dateOfOrder=Calendar.getInstance();
+		this.dateOfOrder=new Date();
 		this.totalPrice = 0.0f;
 		this.itemsInOrder=itemsInOrder;
-		this.acceptanceDay = 0;
-		this.acceptanceWeek = 0;
-		this.acceptanceMonth = 0;
+
 		this.tableNumber = -1;
 		this.count = 0;
 	}
@@ -121,52 +110,26 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 
-	//
-	public Calendar getDateOfOrder() {
+
+	public Date getDateOfOrder() {
 		return dateOfOrder;
 	}
 
-	public void setDateOfOrder(Calendar dateOfOrder) {
+	public void setDateOfOrder(Date dateOfOrder) {
 		this.dateOfOrder = dateOfOrder;
 	}
 	//
 
-	public Calendar getDateOfAcceptance() {
+	public Date getDateOfAcceptance() {
 		return dateOfAcceptance;
 	}
 
-	public void setDateOfAcceptance(Calendar dateOfAcceptance) {
+	public void setDateOfAcceptance(Date dateOfAcceptance) {
 		this.dateOfAcceptance = dateOfAcceptance;
 	}
-	//
 
-	public void setAcceptanceDay() {
 
-		this.acceptanceDay = dateOfAcceptance.get(Calendar.DAY_OF_WEEK);
-	}
-
-	public void setAcceptanceWeek() {
-
-		this.acceptanceWeek = dateOfAcceptance.get(Calendar.WEEK_OF_YEAR);
-	}
-
-	public void setAcceptanceMonth() {
-
-		this.acceptanceMonth = dateOfAcceptance.get(Calendar.MONTH);
-	}
-
-	public int getAcceptanceDay() {
-		return acceptanceDay;
-	}
-
-	public int getAcceptanceWeek() {
-		return acceptanceWeek;
-	}
-
-	public int getAcceptanceMonth() {
-		return acceptanceMonth;
-	}
-
+	
 	public double getTotalPrice() {
 		return totalPrice;
 	}
