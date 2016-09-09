@@ -118,7 +118,7 @@ public class Order implements Serializable {
 	public void setDateOfOrder(Date dateOfOrder) {
 		this.dateOfOrder = dateOfOrder;
 	}
-	//
+	
 
 	public Date getDateOfAcceptance() {
 		return dateOfAcceptance;
