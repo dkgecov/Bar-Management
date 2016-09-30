@@ -136,7 +136,8 @@ public class Order implements Serializable {
 			for (Item item : itemsInOrder) {
 				result += " " + item.getName() + ": " + item.getPrice() + "\n";
 			}
-			calculateTotalPrice();
+			if(getTotalPrice() != 0.0f)
+				calculateTotalPrice();
 			result += "Total price: " + getTotalPrice() + "\n";
 		}
 		return result;

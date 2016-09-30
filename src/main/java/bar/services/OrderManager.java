@@ -34,6 +34,7 @@ public class OrderManager {
 		return orderDAO.getAllWaitingOrders();
 	}
 
+	@Path("/userOrders")
 	@GET
 	@Produces("application/json")
 	public Collection<Order> getCurrentUserOrders() {

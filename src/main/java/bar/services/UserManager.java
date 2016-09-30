@@ -29,9 +29,14 @@ public class UserManager {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void registerUser(User newUser) {
+    public Response registerUser(User newUser) {
+    	boolean emailExists = userDAO.emailExists(newUser.getEmail());
+    	if (emailExists) {
+    		return Response.status(HttpURLConnection.HTTP_CONFLICT).build();
+    	}
         userDAO.addUser(newUser);
         context.setCurrentUser(newUser);
+        return RESPONSE_OK;
     }
     
     @Path("login")
