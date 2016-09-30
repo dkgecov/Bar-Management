@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +42,11 @@ public class Order implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfOrder;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateOfOrder;
 
-	@Temporal(TemporalType.DATE)
-	private Date dateOfAcceptance;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Calendar dateOfAcceptance;
 
 	@ManyToMany
 	private List<Item> itemsInOrder = new ArrayList<>();
