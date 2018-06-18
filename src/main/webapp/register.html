@@ -13,6 +13,7 @@
 		var password = $("#pwd")[0].value;
 		var email = $("#email")[0].value;
 		var role = $("#role").val();
+		var d1=new Date(2000,10,5);
 
 		if (username == "") {
 			alert("Please fill username");
@@ -37,7 +38,8 @@
 				userName : username,
 				password : password,
 				email : email,
-				role : role
+				role : role,
+				dateOfBirth:d1
 			}
 		}
 

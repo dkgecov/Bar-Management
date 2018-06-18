@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Java EE Exercise 2</title>
+<title>Bar JavaEE</title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="styles/bar.css" />
+<link rel="stylesheet" type="text/css" href="styles/bar.css">
 <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
 <script type="text/javascript">
 	isUserAuthenticated = false;
@@ -23,6 +23,7 @@
 				}
 			}
 		});
+		
 		drawTableWithOrders();
 
 		$.ajax({
@@ -40,10 +41,11 @@
 
 	function drawTableWithOrders() {
 		$.ajax({
-			url : 'rest/order',
+			url : 'rest/order/waiting',
 			type : "GET",
 			dataType : "json",
 			success : function(data) {
+				console.log(data);
 				if (data != null) {
 					renderTable(data);
 				} else {
@@ -65,22 +67,115 @@
 	function renderRow(rowData) {
 		var row = $("<tr />");
 		$("#orders_table").append(row);
-		row.append($("<td>" + rowData.executor.userName + "</td>"));
+		row.append($("<td>" + rowData.orderId + "</td>"));
+		var itemsString = "";
+		var itemsInOrder = rowData.itemsInOrder;
+		if(itemsInOrder.constructor === Array){
+			for(var i = 0; i < itemsInOrder.length; i++) {
+				var count = 1;
+				for(var j = i + 1; j < itemsInOrder.length; j++) {
+					if(itemsInOrder[i].itemName === itemsInOrder[j].itemName){
+						count++;
+						itemsInOrder.splice(j, 1);
+						j--;
+					}
+				}
+				itemsString += itemsInOrder[i].itemName + " " + count + "x, ";
+			}
+		}
+		else {
+			itemsString += itemsInOrder.itemName + " 1x";
+		}
+		row.append($("<td>" + itemsString + "</td>"));
+		if(rowData.executor != undefined){
+			row.append($("<td>" + rowData.executor.userName + "</td>"));
+		}else {
+			row.append($("<td>Not taken</td>"));
+		}
 		row.append($("<td>" + rowData.status + "</td>"));
 
-		if (isUserAuthenticated && rowData.amount > 0) {
-			var acceptTd = $("<td />");
-			var link = $("<button>Accept</button>");
-			AcceptTd.append(link);
-			row.append(acceptTd);
-			link.click(function() {
-				$.ajax({
-					url : 'rest/order/accept?id=' + rowData.id,
-					type : "POST",
-					dataType : "json",
-					success : drawTableWithOrders()
+		if (isUserAuthenticated) {
+			if(rowData.status === "WAITING") {
+				var acceptTd = $("<td />");
+				var link = $("<button>Accept</button>");
+				link.attr("class", "buttonAccept");
+				row.append($("<td>-</td>"));
+				acceptTd.append(link);
+				row.append(acceptTd);
+				link.click(function() {
+					$.ajax({
+						url : 'rest/order/accept?orderId=' + rowData.orderId,
+						type : "PUT",
+						dataType : "json",
+						statusCode: {
+							409 : function() {
+								alert("Order already taken!");
+								drawTableWithOrders();
+							},
+							204 : function(){
+								alert("Order not found!");
+								drawTableWithOrders();
+							},
+							200 : function() {
+								drawTableWithOrders();
+							}
+						}
+					});
 				});
-			});
+			}
+			else if(rowData.status === "ACCEPTED" || rowData.status === "OVERDUE") {
+				var currentDate = new Date();
+				var date = new Date(rowData.dateOfAcceptance);
+				var diff = Math.abs(currentDate - date);
+				var minutes = Math.floor((diff/1000)/60);
+				row.append($("<td>" + minutes + "</td>"));
+				var acceptTd = $("<td />");
+				var link = $("<button>Complete</button>");
+				link.attr("class", "buttonComplete");
+				acceptTd.append(link);
+				row.append(acceptTd);
+				link.click(function() {
+					$.ajax({
+						url : 'rest/order/complete?orderId=' + rowData.orderId,
+						type : "PUT",
+						dataType : "json",
+						statusCode : {
+							304 : function() {
+								alert("Order already completed!");
+								drawTableWithOrders();
+							},
+							204 : function() {
+								alert("Order not found!");
+								drawTableWithOrders();
+							},
+							200 : function() {
+								drawTableWithOrders();
+							}
+						}
+					});
+				});
+				if(rowData.status === "ACCEPTED" && minutes >= 0) {
+					$.ajax({
+						url : 'rest/order/overdue?orderId=' + rowData.orderId,
+						type : "PUT",
+						dataType : "json",
+						statusCode : {
+							409 : function() {
+								alert("Order already is overdue!");
+								drawTableWithOrders();
+							},
+							204 : function() {
+								alert("Order not found!");
+								drawTableWithOrders();
+							},
+							200 : function() {
+								alert("Order " + rowData.orderId + " is overdue!");
+								drawTableWithOrders();
+							}
+						}
+					});
+				}
+			}
 		} else {
 			row.append($("<td/>"));
 		}
@@ -99,11 +194,16 @@
 
 </head>
 <body>
-	<div align="left">
-		<h2>
-			<a href="index.html">Simple Bar Management</a>
-		</h2>
-	</div>
+	
+    <nav>
+        <li><a href="login.html" > Log in </a></li>
+          <li> <a href="indexf.html" > Log in with facebook</a> </li>
+         <li> <a href="register.html" > Register </a> </li>
+        <li> <a onclick="logout()" style="cursor: pointer;"> Logout </a></li>
+         <li> <a href="addingOrder.html" >Add Order</a> </li>
+        <li> <a href="addItem.html" >Add Items</a> </li>
+    </nav>
+    
 	<div align="center">
 		<h1>Orders Application</h1>
 	</div>
@@ -111,32 +211,18 @@
 	<div>
 		<table id="orders_table" class="table">
 			<tr>
-				<th>Title</th>
-				<th>Author</th>
-				<th>ISBN</th>
-				<th>Amount</th>
+				<th>Id</th>
+				<th>Executor</th>
+				<th>Status</th>
 				<th>Action</th>
 			</tr>
 		</table>
 	</div>
 
-	<div class="login_register">
-		 <a
-			href="login.html" class="login_form"> Log in </a> <a
-			href="register.html" class="register_form"> Register </a> <a
-			href="login.html" class="login_form"> Log in </a> <a
-			href="register.html" class="register_form"> Register </a>
 
-	</div>
-	<div class="add_order">
-	<a href="addingOrder.html" class="add_order_form">Add Order</a> <a
-			href="addItem.html" class="add_item_form">Add Items</a>
-	</div>
-	<div class="logout">
-		<a onclick="logout()"> Logout </a>
-	</div>
 	<div class="welcome-greeting">
 		Welcome <span id="user-holder"></span> !
 	</div>
+    
 </body>
 </html>

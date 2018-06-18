@@ -1,3 +1,9 @@
+.buttonAccept {
+	background-color: #4CAF50;
+}
+.buttonComplete {
+	background-color: #21ABCD;
+}
 .slide_button{
 	display: block;
 	width : 100px;
@@ -5,60 +11,47 @@
 .table_div{
 	display:none;
 }
-.login_register {
-	position: absolute;
-	top: 30px;
-	right:60px;
-}
-.add_order {
-	position: absolute;
-	top: 30px;
-	right:90px;
-}
-.logout {
-	position: absolute;
-	top: 30px;
-	right:30px;
-}
-.login_form {
-	margin-right: 50px;
-}
-.add_order_form{
-	margin-right: 50px;
-}
-.add_item_form{
-	margin-right: 50px;
-}
+
 .welcome-greeting {
 	position: absolute;
 	top: 30px;
 	left:30px;
 }
-#order_form {
-	display: block;
-	width: 50%;
-	margin-top: 3%;
-	margin-left: 25%;
-	margin-right: 25%;
+
+
+nav{
+    display: block;
+    float:left;
+    list-style: none;
+    width: 100%;
+	height:40px;
+    margin-bottom: 30px;
+
+
 }
-#register_form {
-	display: block;
-	width: 50%;
-	margin-top: 3%;
-	margin-left: 25%;
-	margin-right: 25%;
+nav li {
+	 float: right;
 }
-#item_adding_form {
+
+nav li a{
+	
 	display: block;
-	width: 50%;
-	margin-top: 3%;
-	margin-left: 25%;
-	margin-right: 25%;
+	text-align:  center;
+	line-height: 20px;
+	color: black;
+	font-size: 14px;
+	font-style: bold;
+    padding:  10px 2px;
+	width: auto;    
+	text-decoration:none;
+    border-radius: 7px;
+    margin-right: 5px;
 }
-#login_form {
-	display: block;
-	width: 50%;
-	margin-top: 3%;
-	margin-left: 25%;
-	margin-right: 25%;
+nav li a:hover{
+
+    background-color:#2ECCFA;
+    cursor:pointer;
+    text-decoration:none;
+    color:#610B0B;
 }
+
